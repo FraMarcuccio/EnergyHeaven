@@ -27,6 +27,14 @@ contract EnergyHeaven{
     function join_as_producer() public{
         require(userBalance[msg.sender] >= JOIN_AMOUNT, "Not enough tokens");
         //require(!producers.contains(msg.sender), "Already a producer"); non esiste il metodo contains. trovare alternativa
+        
+        //scorro array per vedere se esiste indirizzo corrispondente a quello fornito
+        for(uint i = 0; i < producers.length; i++){
+            if(producers[i] == msg.sender){
+                require(false, "Already a producer");
+            }
+        }
+        
         userBalance[msg.sender] -= JOIN_AMOUNT;
         piggyBank += JOIN_AMOUNT;
         producers.push(msg.sender);
@@ -53,9 +61,25 @@ contract EnergyHeaven{
 
     function sell_energy(uint amount, uint price) public{
         //require(producers.contains(msg.sender), "You're not a producer");   non esiste il metodo contains. trovare alternativa
+        
+        // Verifica che il chiamante sia un produttore
+        require(isProducer(msg.sender), "You're not a producer");
+        // Aggiorna le informazioni sulla vendita dell'energia da parte del produttore
+        
         energyList[msg.sender].amount += amount;
         energyList[msg.sender].price += price;
     }
+
+    // Funzione helper per verificare se un indirizzo è presente nell'array dei produttori
+    function isProducer(address addr) private view returns (bool) {
+        for (uint i = 0; i < producers.length; i++) {
+            if (producers[i] == addr) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     function buy_energy(uint tokens) public returns (bool result, uint bought_amount){
        
@@ -81,12 +105,41 @@ contract EnergyHeaven{
         return (true, bought_amount);
     }
 
-    /*
-    fuction find_cheapest() private returns(address[] memory cheapest, uint memory price) {
+    function find_cheapest() private view returns(address[] memory cheapest, uint price) {
         //ritorna tutti i producers che stanno vendendo ad un minor prezzo in un array e il prezzo
-        uint price;
-        address[] cheapest;
-        return(cheapest, price)
+        
+        cheapest = new address[](producers.length);
+        //inizializzo price con un valore più alto di quello possibile
+        //uint price = 2**256 -1; 
+
+        price = uint(1); //da definire ancora in fase di test se funziona correttamente
+
+        uint j = 0; //indice per l'array cheapest
+        for(uint i = 0; i < producers.length; i++){
+
+            //prendo il prezzo di vendita del produttore
+            uint p = energyList[producers[i]].price;
+    
+            //se è il più basso che ho visto fino ad ora, lo mantengo e resetto l'array cheapest
+            if(p < price){
+                cheapest = new address[](producers.length);
+                j = 0;
+                price = p;
+            }
+            
+            //se il prezzo è uguale a quello più basso che ho visto finora lo aggiungo all'array cheapest
+            if(p == price){
+                cheapest[j] = producers[i];
+                j++;
+            }
+        }
+
+        return (cheapest, price);
+
+
+        //uint price;
+        //address[] cheapest;
+        //return(cheapest, price)
     }
-    */
+
 }

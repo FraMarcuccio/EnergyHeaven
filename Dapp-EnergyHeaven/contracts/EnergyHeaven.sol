@@ -67,7 +67,7 @@ contract EnergyHeaven{
         // Aggiorna le informazioni sulla vendita dell'energia da parte del produttore
         
         energyList[msg.sender].amount += amount;
-        energyList[msg.sender].price += price;
+        energyList[msg.sender].price = price;
     }
 
     // Funzione helper per verificare se un indirizzo è presente nell'array dei produttori

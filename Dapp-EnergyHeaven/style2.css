@@ -1,0 +1,100 @@
+
+a{
+  color: blue;
+  text-decoration: none;
+}
+
+p{
+  line-height: 1.2;
+}
+
+.text-1{
+  font-size: 2ren;
+}
+
+.img-res{
+  width: 50%;
+  height: auto;
+}
+
+
+.logo{
+  /*border: 1px solid red;*/
+  position: fixed; /*se non si mette gli elementi sono uno sotto l'altro in maniera sequenziale*/
+  top: 0;
+  left: 0;
+  padding: 5%;
+  display: block; /*altrimenti il padding non viene applicato ai link*/
+  z-index: 100; /*priorità sulla pagina, l'emento sta sopra gli altri che hanno z.index < del suo*/
+}
+
+.menu{
+  /*border: 1px solid red;*/
+  position: fixed; 
+  top: 0;
+  right: 0;
+  padding: 5%;
+  display: block;
+  z-index: 100;
+}
+
+.hero{
+  /*border: 1px solid red;*/
+  height: 80vh; /* altezza 80% del viewport*/
+  width: 100%; /*larga 100% larghezza disponibile aschermo*/
+  position: relative; /**/
+  background: url("background.jpg") no-repeat center center; /*non ripetere l'immagine e centrala orizzontalmente e verticalmente*/
+  background-size: cover;
+}
+
+.hero_title{
+  position: absolute; /*imposta secondo le proprietà sotto indicate alla fine della pagina*/
+  bottom: 50%;
+  right: 2%;
+}
+
+.content{
+  max-width: 60%; /*altezza amssima relativa alla pagina*/
+  margin: 0 auto; /*mette al centro il */
+  /*border: 1px solid red;*/
+  padding: 2%;
+}
+
+.cover{
+  height: 80%;
+  width: 100%;
+  padding: 4%;
+  background: url(background.jpg) no-repeat center center;
+  display: flex;
+  justify-content: center; /*alliena al centro orizzontalmente elemento dentro la cover*/
+  align-items: center;
+}
+
+
+/*media query per impostare grandezza per cellulare, in questo caso grandezza massima 760px imposta grandezza del content a 90%*/
+@media (max-width: 760px){
+  .content{
+    max-width: 90%;
+  }
+}
+
+
+.grid{
+  display: flex;
+  flex-wrap: wrap;
+  /*elementi flwxbox possono andare su più righe*/
+  max-width: 1200px; /*largezza fissa*/
+  margin: 0 auto;
+} 
+
+.col_50{
+  width: 40%;
+  /*border: 1px solid red;*/
+  padding: 2%;
+}
+
+@media (max-width: 760px){
+  .col_50{
+    width: 100%;
+  }
+}

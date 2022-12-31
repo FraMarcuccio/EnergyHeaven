@@ -1,5 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+	<meta charset="utf-8">
+
+	<head>
+		<title>testnet</title>
+    <!-- Bootstrap -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container">
+
+			<!-- Some preliminary information added to embellish the page -->
+			<header><h1>testnet</h1></header>
+
+			<section id="inutile">
+
+				<form onsubmit="acquire(); updateDisplayedInformation(); return false;"
+					id="acquireform">
+
+
+          <label for="eth_amount" />
+
+          <!-- Notice that "required" imposes a value to be inserted! -->
+          <input type="number" name="guess" id="eth_amount"
+              required="required"
+              min="1" />
+          <!-- "min" and "max" limit the range of possible inputs -->
+          <!-- "placeholder" is a suggestion -->
+          <button type="submit">send!</button>
+
+			</section>
+
+
+
+      <!--
+
+			<footer>
+				<header><h2>Status</h2></header>
+				<p>Your account address is:
+					<code id="myaccountaddress">n</code>.
+
+				</p>
+
+				<p>Your current balance in tokens is:
+					<strong id="mybalance">x</strong>.
+					
+				</p>
+
+				<p>Your current balance in Wei is:
+					<strong id="myweibalance">x</strong>.
+
+				</p>
+				
+			</footer>
+
+      -->
+
+		</div>
+	</body>
+
+
+	<script src="dist/js/jquery.min.js"></script>
+	<script src="dist/js/bootstrap.min.js"></script>
+	<script src="dist/js/web3.min.js"></script>
+  <!-- To make our code tidier, we separate the JS script from the HTML file -->
+	<script src="testnet.front-end.js"></script>
+
+
+
+</html>
+
+
+
+
+
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,6 +115,9 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/web3.min.js"></script>
 
+<script src="testnet.front-end.js"></script>
+-->
+<!--
 <script>
   $("form").submit(function(e){e.preventDefault();});
 
@@ -51,11 +133,11 @@
   var contractAbi = []
 
   // Set the contract address
-  var contractAddress = '0xCf5d4dE14c3BbEe774D351575EDc9adb051c4d2c';
+  var contractAddress = '0x3F033807F6714E138fBb5b47cEebb607F8D9CA60';
   // Insert your contract address there
 
   // Set the address from which transactions are sent
-  var senderAddress = '0xB5766B5d15ae1f6b80CbF1560e064DA289E75ea9';
+  var senderAddress = '0x77f1E9e68d09E8d98130c7794aacE4Ed68083e30';
   // Insert your contract address there
 
   // Set the contract
@@ -71,5 +153,6 @@
 
 
 </script>
+-->
 
 </html>

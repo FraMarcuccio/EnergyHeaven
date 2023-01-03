@@ -20,6 +20,8 @@ contract EnergyHeaven{
     uint public constant PRICE = 2 * 1e15; // 2 x 10^{15}. IE 2 finney
     uint public constant REVERSE_EXC_VALUE = 2 * 1e12; // 2 x 10^{12}. IE 2 SZABO
 
+    event Acquiring(address buyer, uint tokens);
+
     constructor(){
         minter = payable(msg.sender);
     }
@@ -42,7 +44,9 @@ contract EnergyHeaven{
 
     function obtain_tokens() public payable{
         require(msg.value >= PRICE, "Not enough value for a token");
-        userBalance[msg.sender] += msg.value / PRICE;
+        uint amount = msg.value / PRICE;
+        userBalance[msg.sender] += amount;
+        emit Acquiring(msg.sender, amount);
     }
 
     function tokens_to_ETH(uint amount) public payable{
@@ -101,7 +105,7 @@ contract EnergyHeaven{
             i += 1;
             if(i>=cheapest.length) i=0;
         }  
-
+        
         return (true, bought_amount);
     }
 

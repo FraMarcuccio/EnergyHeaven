@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta charset="utf-8">
+
+	<head>
+		<title>testnet</title>
+    <!-- Bootstrap -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container">
+
+			<!-- Some preliminary information added to embellish the page -->
+			<header><h1>testnet</h1></header>
+
+			<section id="inutile">
+
+				<form onsubmit="acquire(); updateDisplayedInformation(); return false;"
+					id="acquireform">
+
+
+          <label for="eth_amount" />
+
+          <!-- Notice that "required" imposes a value to be inserted! -->
+          <input type="number" name="guess" id="eth_amount"
+              required="required"
+              min="1" />
+          <!-- "min" and "max" limit the range of possible inputs -->
+          <!-- "placeholder" is a suggestion -->
+          <button type="submit">send!</button>
+
+			</section>
+
+
+
+      <!--
+
+			<footer>
+				<header><h2>Status</h2></header>
+				<p>Your account address is:
+					<code id="myaccountaddress">n</code>.
+
+				</p>
+
+				<p>Your current balance in tokens is:
+					<strong id="mybalance">x</strong>.
+					
+				</p>
+
+				<p>Your current balance in Wei is:
+					<strong id="myweibalance">x</strong>.
+
+				</p>
+				
+			</footer>
+
+      -->
+
+		</div>
+	</body>
+
+
+	<script src="dist/js/jquery.min.js"></script>
+	<script src="dist/js/bootstrap.min.js"></script>
+	<script src="dist/js/web3.min.js"></script>
+  <!-- To make our code tidier, we separate the JS script from the HTML file -->
+	<script src="testnet.front-end.js"></script>
+
+
+
+</html>
+
+
+
+
+
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energy Heaven</title>
+
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+  <form onsubmit="acquire(); return false;" id="acquire">
+    <input type="number" required="required">
+    <button type="submit">Buy Green Token</button>
+  </form>
+
+  <form onsubmit="obtain(); return false;" id="obtain">
+    <input type="submit" required="required">
+    <button type="submit">Obtainment options</button>
+  </form>
+
+  <form onsubmit="sell(); return false;" id="selling">
+    <input type="submit" required="required">
+    <button type="submit">Selingl options</button>
+  </form>
+
+  <form onsubmit="convert(); return false;" id="convert">
+    <input type="number" required="required">
+    <button type="submit">Green Token to ETH</button>
+  </form>
+</body>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/web3.min.js"></script>
+
+<script src="testnet.front-end.js"></script>
+-->
+<!--
+<script>
+  $("form").submit(function(e){e.preventDefault();});
+
+  // Initialisation of Web3
+  if (typeof web3 !== 'undefined') {
+  web3 = new Web3(web3.currentProvider);
+  } else {
+    // Set the provider you want from Web3.providers
+    // Use the WebSocketProvider to enable events subscription.
+    web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:7545"));
+  }
+
+  var contractAbi = []
+
+  // Set the contract address
+  var contractAddress = '0x3F033807F6714E138fBb5b47cEebb607F8D9CA60';
+  // Insert your contract address there
+
+  // Set the address from which transactions are sent
+  var senderAddress = '0x77f1E9e68d09E8d98130c7794aacE4Ed68083e30';
+  // Insert your contract address there
+
+  // Set the contract
+  var contract = new web3.eth.Contract(contractAbi, contractAddress);
+
+  // Subscribe to all events by the contract
+  contract.events.allEvents(
+    callback=function(error, event){ // A "function object". Explained here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions#The_function_expression_(function_expression)
+      console.log(event);
+    }
+  );
+
+
+
+</script>
+-->
+
+</html>

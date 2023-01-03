@@ -16,11 +16,12 @@ contract EnergyHeaven{
 
     uint public piggyBank = 1000;
 
-    uint public constant JOIN_AMOUNT = 100; // quota iniziale per entrare a far parte dei venditori
+    uint public constant JOIN_AMOUNT = 1; // quota iniziale per entrare a far parte dei venditori
     uint public constant PRICE = 2 * 1e15; // 2 x 10^{15}. IE 2 finney
-    uint public constant REVERSE_EXC_VALUE = 2 * 1e12; // 2 x 10^{12}. IE 2 SZABO
+    uint public constant REVERSE_EXC_VALUE = 1 * 1e15; // 1 x 10^{15}. IE 1 finney
 
-    event Acquiring(address buyer, uint tokens);
+    event AcquiringTokens(address user, uint tokens);
+    event TokensToEth(address user, uint tokens);
 
     constructor(){
         minter = payable(msg.sender);
@@ -46,7 +47,7 @@ contract EnergyHeaven{
         require(msg.value >= PRICE, "Not enough value for a token");
         uint amount = msg.value / PRICE;
         userBalance[msg.sender] += amount;
-        emit Acquiring(msg.sender, amount);
+        emit AcquiringTokens(msg.sender, amount);
     }
 
     function tokens_to_ETH(uint amount) public payable{
@@ -55,6 +56,7 @@ contract EnergyHeaven{
         //(bool sent, bytes memory data) = msg.sender.call{value: amount*REVERSE_EXC_VALUE}("");
         //require(sent, "Failed to send Ether");
         userBalance[msg.sender] -= amount;
+        emit TokensToEth(msg.sender,amount);
         
     }
 
@@ -89,9 +91,8 @@ contract EnergyHeaven{
        
         // prendere il multiple return di find_cheapest 
         address[] memory cheapest;
-        uint price;
-        // address cheapest[] = find_cheapest();
-        // price
+        uint price; 
+        (cheapest,price) = find_cheapest();
         
         require(tokens>price, "Not enough tokens");
         bought_amount = 0;

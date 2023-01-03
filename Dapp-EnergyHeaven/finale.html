@@ -33,17 +33,25 @@
 
 
   <div class="obtaintks">
-    <form class="obtaintks" onsubmit="obtain_tokens(), getOutput(); return false;">
+    <form class="obtaintks" onsubmit="obtain_tokens(), getUserBalance(); return false;">
       <p>obtain tokens</p>    
       <input type="number" id="input" required="required">
       <button type="submit">obtain_tokens</button>
       </form>
   </div>
 
+  <div class="become_prod">
+    <form class="become_prod" onsubmit="join_as_producer(), getUserBalance(); return false;">
+      <p>become producer</p>    
+      <input type="checkbox" id="producer" required="required" value="yes"> 
+      <button type="submit">become</button>
+      </form>
+  </div>
+
 
   <div class="ETH">
     <!--Da finire, solo scheletro HTML-->
-    <form onsubmit="tokens_to_ETH(); return false;">
+    <form class="eth" onsubmit="tokens_to_ETH(), getUserBalance(); return false;">
       <p>obtain ETH</p>    
       <input type="number" id="input2" required="required">
       <button type="submit">tokens_to_ETH</button>
@@ -51,13 +59,24 @@
   </div>
 
   <div class="a">
+    <form class="a" onsubmit="buy_energy(), getUserBalance(); return false;">
+      <p>buy energy</p>    
+      <input type="number" id="input3" required="required">
+      <button type="submit">BUY!</button>
+    </form>
     <p>show graph for buying energy options</p>    
-    <button onclick="buy_energy()">buy_energy</button>  
+    <!--<button onclick="buy_energy()">buy_energy</button> --> 
   </div>
 
   <div class="b">
-    <p>show graph for selling energy options</p>    
-    <button onclick="sell_energy()">sell_energy</button>  
+    <form class="b" onsubmit="sell_energy(); return false;">
+      <p>SELL energy</p>    
+      <input type="number" id="input4" required="required">
+      <input type="number" id="input5" required="required">
+      <button type="submit">SELL!</button>
+    </form>
+    <p>show graph for selling energy options</p>     
+    <!--<button onclick="sell_energy()">sell_energy</button> --> 
   </div>
 
   <div class="c">
@@ -75,7 +94,7 @@
   
   <script>
 
-    function getOutput(){
+    function getUserBalance(){
       contract.methods.userBalance(senderAddress).call({from:senderAddress, gas: 120000}).then(function(result) { // A promise in action
       $("#balance").html(result);
     }).catch((error) => { console.error(error); });
@@ -188,7 +207,10 @@
       }
     }
 
-    addLoadEvent(function(){ document.getElementById("label").innerHTML = 'ciaocaicoascafas';});
+    addLoadEvent(function(){ 
+      document.getElementById("label").innerHTML = 'ciaocaicoascafas';
+      getUserBalance();
+    });
   
   </script>
 
@@ -238,6 +260,8 @@
     web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:7545"));
   }
 
+  
+
   // Set contract ABI
   var contractAbi = [
     {
@@ -251,7 +275,7 @@
         {
           "indexed": false,
           "internalType": "address",
-          "name": "buyer",
+          "name": "user",
           "type": "address"
         },
         {
@@ -261,7 +285,26 @@
           "type": "uint256"
         }
       ],
-      "name": "Acquiring",
+      "name": "AcquiringTokens",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "TokensToEth",
       "type": "event"
     },
     {
@@ -461,11 +504,11 @@
 
 
   // Set the contract address
-  var contractAddress = '0xF600e0740936f557B9F9ACe117334Ea84AAFf4b7';
+  var contractAddress = '0x2264abE36DE264646C96f00f0c632DAaBf493bc6';
   // Insert your contract address there
 
   // Set the address from which transactions are sent
-  var senderAddress = '0x30dd9C7F142F44ED8B4B36EaB6374b6baD72b0CE';
+  var senderAddress = '0xAD5a29f9bB5CfAC473Fd77856828961a761b6Afa';
   // Insert your contract address there
 
   // Set the contract
@@ -473,7 +516,7 @@
 
 
   function obtain_tokens(){
-    var input =$('#input').val();
+    var input =$('#input').val() * 10 **15;
 
     if (input < 1) {
       alert("The numb should be higher than 0");
@@ -482,7 +525,7 @@
 
     console.log("input number is " + input);
 
-    contract.methods.obtain_tokens().call().then(function(result) {
+    contract.methods.obtain_tokens().call({from:senderAddress, value:input}).then(function(result) {
       console.log("number in input: " + input);
     });
 
@@ -492,6 +535,107 @@
 
     return false;
   }
+
+  function tokens_to_ETH(){
+    var input =$('#input2').val();
+
+    if (input < 1) {
+      alert("The numb should be higher than 0");
+      return false;
+    }
+
+    console.log("input number is " + input);
+
+    contract.methods.tokens_to_ETH(input).call({from:senderAddress, gas:120000}).then(function(result) {
+      console.log("number in input: " + input);
+    });
+
+    contract.methods.tokens_to_ETH(input).send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
+      console.log("Tx Hash: " + receipt.transactionHash);
+    });
+
+    return false;
+  }
+
+  function join_as_producer(){
+    var input =$('#producer').val();
+
+
+    if (input == "yes" ) {
+      console.log("input number is " + input);
+
+
+      contract.methods.join_as_producer().call({from:senderAddress, gas:120000}).then(function(result) {
+        console.log("input: " + input);
+      });
+
+      contract.methods.join_as_producer().send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
+        console.log("Tx Hash: " + receipt.transactionHash);
+      });
+
+    }
+
+
+   
+    return false;
+  }
+
+  function buy_energy(){
+    var input =$('#input3').val();
+
+
+    if (input < 1) {
+      alert("The numb should be higher than 0");
+      return false;
+    }
+
+
+    console.log("input number is " + input);
+
+
+    contract.methods.buy_energy(input).call({from:senderAddress, gas:120000}).then(function(result) {
+      console.log("number in input: " + input);
+    });
+
+    contract.methods.buy_energy(input).send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
+      console.log("Tx Hash: " + receipt.transactionHash);
+    });
+
+    return false;
+  }
+
+  function sell_energy(){
+    var amount =$('#input4').val();
+    var price =$('#input5').val();
+
+
+    if (amount < 1) {
+      alert("The amount should be higher than 0");
+      return false;
+    }
+
+    if (price < 1) {
+      alert("The price should be higher than 0");
+      return false;
+    }
+
+
+    console.log("amount is " + amount);
+    console.log("price is " + price);
+
+
+    contract.methods.sell_energy(amount,price).call({from:senderAddress, gas:120000}).then(function(result) {
+      console.log("amount in input " + amount);
+      console.log("price in input " + price);
+    });
+
+    contract.methods.sell_energy(amount,price).send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
+      console.log("Tx Hash: " + receipt.transactionHash);
+    });
+
+    return false;
+  }
+  
   </script>
 
 

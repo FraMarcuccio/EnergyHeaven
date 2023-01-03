@@ -5,6 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!--Font bello per le icone-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <link rel="stylesheet" href="finale.css">
+
+
   <!--Si può cambiare con il file BS locale-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -12,34 +18,74 @@
 </head>
 <body>
 
-  <form onsubmit="obtain_tokens(); return false;">
-  <p>obtain tokens</p>    
-  <input type="number" id="input" required="required">
-  <button type="submit">obtain_tokens</button>
-  </form>
+  <div class="navbar">
+    <a href="#home">Home</a>
+    <div class="subnav">
+      <button class="subnavbtn">Utente
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="subnavcnt">
+        <a href="#login">Login</a>
+        <a href="#logout">Logout</a>
+      </div>
+    </div>
+  </div>
 
 
-  <!--Da finire, solo scheletro HTML-->
-  <form onsubmit="tokens_to_ETH(); return false;">
-    <p>obtain ETH</p>    
-    <input type="number" id="input2" required="required">
-    <button type="submit">tokens_to_ETH</button>
-  </form>
+  <div class="obtaintks">
+    <form class="obtaintks" onsubmit="obtain_tokens(), getOutput(); return false;">
+      <p>obtain tokens</p>    
+      <input type="number" id="input" required="required">
+      <button type="submit">obtain_tokens</button>
+      </form>
+  </div>
 
-  <p>show graph for buying energy options</p>    
-  <button onclick="buy_energy()">buy_energy</button>
 
-  <p>show graph for selling energy options</p>    
-  <button onclick="sell_energy()">sell_energy</button>
+  <div class="ETH">
+    <!--Da finire, solo scheletro HTML-->
+    <form onsubmit="tokens_to_ETH(); return false;">
+      <p>obtain ETH</p>    
+      <input type="number" id="input2" required="required">
+      <button type="submit">tokens_to_ETH</button>
+    </form>
+  </div>
 
-  <p></p>
-  <button onclick="sellingGraph(), openSelling()">Selling graph and options</button>
+  <div class="a">
+    <p>show graph for buying energy options</p>    
+    <button onclick="buy_energy()">buy_energy</button>  
+  </div>
 
-  <p></p>
-  <button onclick="openBuying()" class="drop">Buying graph and buying options</button>
+  <div class="b">
+    <p>show graph for selling energy options</p>    
+    <button onclick="sell_energy()">sell_energy</button>  
+  </div>
+
+  <div class="c">
+    <p></p>
+    <button onclick="sellingGraph(), openSelling()">Selling graph and options</button>
+  
+  </div>
+  
+
+  <div class="e">
+    <p></p>
+    <button onclick="openBuying()" class="drop">Buying graph and buying options</button>
+  
+  </div>
+  
+  <script>
+
+    function getOutput(){
+      contract.methods.userBalance(senderAddress).call({from:senderAddress, gas: 120000}).then(function(result) { // A promise in action
+      $("#balance").html(result);
+    }).catch((error) => { console.error(error); });
+    }
+
+  </script>
+
 
   <!--graph canvas-->
-  <canvas id="selling"></canvas>
+  <canvas class="selling" id="selling"></canvas>
 
   <!--Popup sellings options-->
   <div id="popupSelling">
@@ -81,21 +127,12 @@
   </div>
 
 
-  <div class="navbar">
-    <a href="#home">Home</a>
-    <div class="subnav">
-      <button class="subnav1">Utente
-        <i class="fa fa-caret-down"></i>
-      </button>
-      <div class="subnav1">
-        <a href="#login">Login</a>
-        <a href="#logout">Logout</a>
-      </div>
-    </div>
-  </div>
+
 
 
   <label id="label">provaprovarpovaas</label>
+
+  <label id="balance">asasdasd</label>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -456,6 +493,10 @@
     return false;
   }
   </script>
+
+
+
+
 
 </body>
 </html>

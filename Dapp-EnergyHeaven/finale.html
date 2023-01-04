@@ -16,6 +16,8 @@
 
   <title>Speriamo funzioni mannaggia i morti</title>
 </head>
+
+<!--onload="sellingGraph()"-->
 <body>
 
   <div class="navbar">
@@ -81,7 +83,7 @@
 
   <div class="c">
     <p></p>
-    <button onclick="sellingGraph(), openSelling()">Selling graph and options</button>
+    <button class="openbtn" onclick="openSelling()">Selling graph and options</button>
   
   </div>
   
@@ -104,11 +106,31 @@
 
 
   <!--graph canvas-->
-  <canvas class="selling" id="selling"></canvas>
+
+
+  <div class="grid">
+    <div class="col50">
+    </div>
+
+  </div>
+
+
+  <div class="maingrid">
+    <div class="bu">balance+user</div>
+    <div class="b">buttom</div>
+    <div class="g">graphs
+      <div class="col50">
+        <canvas class="selling" id="selling"></canvas>
+      </div>
+    </div>
+  </div>
+
+
+
 
   <!--Popup sellings options-->
-  <div id="popupSelling">
-    <form>
+  <div class="popupselling" id="popupSelling">
+    <form class="container">
       <h2>Selling options</h2>
 
       <label for="energy">Quantity of energy</label>
@@ -117,8 +139,8 @@
       <label for="price">Price of energy</label>
       <input type="number" required>
 
-      <button type="submit">Sell energy</button>
-      <button type="button" onclick="closeSelling()">Close</button>
+      <button type="submit" class="sell">Sell energy</button>
+      <button type="button" class="cancel" onclick="closeSelling()">Close</button>
     </form>
   </div>
   
@@ -186,6 +208,9 @@
     }
   </script>
 
+<script>
+  window.onload = sellingGraph();
+</script>
   <!--label per aggiornare bilanci degli account-->
 
   <script>

@@ -10,14 +10,12 @@
 
   <link rel="stylesheet" href="finale.css">
 
-
   <!--Si può cambiare con il file BS locale-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
   <title>HTML finale</title>
 </head>
 
-<!--onload="sellingGraph()"-->
 <body>
 
 
@@ -25,22 +23,22 @@
   <div class="maingrid">
     <div class="user">
 
-      <div class="navbar">
-        <label id="balance">balance</label>
-        <label id="award">award</label>
-        <p></p>
-        <p></p>
-        <div class="subnav">
-          <button class="subnavbtn">Utente
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="subnavcnt">
-            <a href="#login">Login</a>
-            <a href="#logout">Logout</a>
-          </div>
-        </div>
-      </div>
 
+        <ul class="ull">
+          <li class="l1"><a href="#home">Home</a></li>
+          <li class="l2" ><label class="balancel" id="balance">balance</label></li>
+          <li class="l2" ><label class="rewardl" id="reward">reward</label></li>
+          <li class="dropdown">
+            <button class="dropbtn">Sign In
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <button class="login">LogIn</button>
+              <button class="logout">LogOut</button>
+            </div>
+          </li>
+        </ul>
+      
 
     </div>
 
@@ -93,6 +91,7 @@
 
       <div class="submit">
         <button class="openbuy" onclick="openbuy()">Buying</button>
+        
         <!--Popup buying options-->
         <div class="popupbuying" id="popupBuying">
           <form class="container">
@@ -143,7 +142,7 @@
       document.getElementById("popupBuying").style.display = "none";
     }
   
-    </script>
+  </script>
 
 
   <script>
@@ -155,31 +154,6 @@
     }
 
   </script>
-
-
-  <!--graph canvas-->
-
-
-  <div class="grid">
-    <div class="col50">
-
-    </div>
-
-  </div>
-
-
-  <!--popup buying options
-  <div id="popupBuying">
-    <form onmouseout="buy_energy()">
-      <a href="#">prova1</a>
-      <a href="#">prova2</a>
-      <a href="#">prova3</a>
-    </form>
-  </div>
-  -->
-
-
-  <label id="label">provaprovarpovaas</label>
 
 
   <script src="js/jquery.min.js"></script>
@@ -262,7 +236,7 @@
   <!--label per aggiornare bilanci degli account-->
 
   <script>
-    document.getElementById("label").innerHTML = 'esce questa scritta quando carica tutta la pagina';
+    document.getElementById("reward").innerHTML = 'esce questa scritta quando carica tutta la pagina';
     
 
     //aggiorna continuamente il valore mentre la pagina è aperta, da provare non sono convintissimo funzioni correttamente
@@ -281,7 +255,7 @@
     }
 
     addLoadEvent(function(){ 
-      document.getElementById("label").innerHTML = 'ciaocaicoascafas';
+      document.getElementById("reward").innerHTML = 'ciaocaicoascafas';
       getUserBalance();
     });
   
@@ -291,27 +265,6 @@
 
 
   <!--popup buying options-->
-  <script>
-    function openBuying(){
-      document.getElementById("popup2").classList.toggle("show");
-    }
-
-    //chiude menu popup quando clicchi fuori dal menu
-    window.onclick = function(event){
-      if(!event.target.matches('.drop')){
-        var dropdowns = document.getElementById("popupBuying");
-        var i;
-        for(i = 0; i < dropdowns.length; i++){
-          var openDD = dropdowns[i];
-          if(openDD.classList.contains('show')){
-            openDD.classList.remove('show');
-          }
-        }
-      }
-    }
-
-  </script>
-
 
   <script>
 
@@ -619,9 +572,9 @@
     return false;
   }
 
-function yes(){
-  alert("ahahah")
-}
+  function yes(){
+    alert("ahahah")
+  }
 
 
   function join_as_producer(){
@@ -707,8 +660,6 @@ function yes(){
   }
   
   </script>
-
-
 
 
 

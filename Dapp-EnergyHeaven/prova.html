@@ -11,18 +11,17 @@
 
 <body>
 
-  <div class="navbar">
-    <a href="#home">Home</a>
-    <div class="subnav">
-      <button class="subnavbtn">Utente
-        <i class="fa fa-caret-down"></i>
-      </button>
-      <div class="subnavcnt">
-        <a href="#login">Login</a>
-        <a href="#logout">Logout</a>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#news">News</a></li>
+    <li class="dropdown">
+      <button class="dropbtn">dropdown</button>
+      <div class="dropdown-content">
+        <button class="login">Login</button>
+        <button class="logout">Logout</button>
       </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 

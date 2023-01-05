@@ -7,93 +7,145 @@
 
   <!--Font bello per le icone-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
+
   <link rel="stylesheet" href="finale.css">
 
 
   <!--Si può cambiare con il file BS locale-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-  <title>Speriamo funzioni mannaggia i morti</title>
+  <title>HTML finale</title>
 </head>
 
 <!--onload="sellingGraph()"-->
 <body>
 
-  <div class="navbar">
-    <a href="#home">Home</a>
-    <div class="subnav">
-      <button class="subnavbtn">Utente
-        <i class="fa fa-caret-down"></i>
-      </button>
-      <div class="subnavcnt">
-        <a href="#login">Login</a>
-        <a href="#logout">Logout</a>
+
+
+  <div class="maingrid">
+    <div class="user">
+
+      <div class="navbar">
+        <label id="balance">balance</label>
+        <label id="award">award</label>
+        <p></p>
+        <p></p>
+        <div class="subnav">
+          <button class="subnavbtn">Utente
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="subnavcnt">
+            <a href="#login">Login</a>
+            <a href="#logout">Logout</a>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="button">
+
+      <div class="obtaintks">
+        <form class="obtaintks" onsubmit="obtain_tokens(), getUserBalance(); return false;">
+          <button class="obtbutton" type="submit">obtain tokens</button>
+          <input type="number" id="input" required="required">  
+        </form>
+      </div>
+
+
+
+      <div class="become_prod">
+        <form class="become_prod" onsubmit="join_as_producer(), getUserBalance(); return false;">
+          <button type="submit">become producer</button>
+        </form>
+      </div>
+
+
+      <div class="ETH">
+        <form class="eth" onsubmit="tokens_to_ETH(), getUserBalance(); return false;">
+          <button type="submit">tokens_to_ETH</button>
+          <input type="number" id="input2" required="required">
+        </form>
+      </div>
+
+
+      <div class="submit">
+        <p></p>
+        <button class="opensell" onclick="openSelling()">Selling</button>
+        
+        <!--Popup sellings options-->
+        <div class="popupselling" id="popupSelling">
+          <form class="container" onsubmit="sell_energy(); return false;">
+            <h2>Selling options</h2>
+
+            <label for="energy">Quantity of energy</label>
+            <input type="number" id="Enumber" required>
+
+            <label for="price">Price of energy</label>
+            <input type="number" id="Eprice" required>
+
+            <button type="submit" class="sell">Sell energy</button>
+            <button type="button" class="cancel" onclick="closeSelling()">Close</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="submit">
+        <button class="openbuy" onclick="openbuy()">Buying</button>
+        <!--Popup buying options-->
+        <div class="popupbuying" id="popupBuying">
+          <form class="container">
+            <h2>Buying options</h2>
+  
+            <form onsubmit="buy_energy(), getUserBalance(); return false;">
+              <label for="quantity">Quantity of energy</label>
+              <input type="number" id="Qnumber" required>
+              
+              <button type="submit" class="sell">Buy energy</button>
+              <button type="button" class="cancel" onclick="closeBuying()">Close</button>
+            </form>
+
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="graph">
+      <div class="col50">
+        <canvas class="selling" id="selling">asdasd</canvas>        
+      </div>
+      <div class="col50">
+        <canvas id="buying" id="buying"></canvas>
       </div>
     </div>
   </div>
 
 
-  <div class="obtaintks">
-    <form class="obtaintks" onsubmit="obtain_tokens(), getUserBalance(); return false;">
-      <p>obtain tokens</p>    
-      <input type="number" id="input" required="required">
-      <button type="submit">obtain_tokens</button>
-      </form>
-  </div>
+  <!--popup selling and buying-->
+  <script>
 
-  <div class="become_prod">
-    <form class="become_prod" onsubmit="join_as_producer(), getUserBalance(); return false;">
-      <p>become producer</p>    
-      <input type="checkbox" id="producer" required="required" value="yes"> 
-      <button type="submit">become</button>
-      </form>
-  </div>
-
-
-  <div class="ETH">
-    <!--Da finire, solo scheletro HTML-->
-    <form class="eth" onsubmit="tokens_to_ETH(), getUserBalance(); return false;">
-      <p>obtain ETH</p>    
-      <input type="number" id="input2" required="required">
-      <button type="submit">tokens_to_ETH</button>
-    </form>
-  </div>
-
-  <div class="a">
-    <form class="a" onsubmit="buy_energy(), getUserBalance(); return false;">
-      <p>buy energy</p>    
-      <input type="number" id="input3" required="required">
-      <button type="submit">BUY!</button>
-    </form>
-    <p>show graph for buying energy options</p>    
-    <!--<button onclick="buy_energy()">buy_energy</button> --> 
-  </div>
-
-  <div class="b">
-    <form class="b" onsubmit="sell_energy(); return false;">
-      <p>SELL energy</p>    
-      <input type="number" id="input4" required="required">
-      <input type="number" id="input5" required="required">
-      <button type="submit">SELL!</button>
-    </form>
-    <p>show graph for selling energy options</p>     
-    <!--<button onclick="sell_energy()">sell_energy</button> --> 
-  </div>
-
-  <div class="c">
-    <p></p>
-    <button class="openbtn" onclick="openSelling()">Selling graph and options</button>
+    function openSelling(){
+      document.getElementById("popupSelling").style.display = "block";
+    }
   
-  </div>
+    function closeSelling(){
+      document.getElementById("popupSelling").style.display = "none";
+    }
   
+    function openbuy(){
+      document.getElementById("popupBuying").style.display = "block";
+    }
 
-  <div class="e">
-    <p></p>
-    <button onclick="openBuying()" class="drop">Buying graph and buying options</button>
+    function closeBuying(){
+      document.getElementById("popupBuying").style.display = "none";
+    }
   
-  </div>
-  
+    </script>
+
+
   <script>
 
     function getUserBalance(){
@@ -110,42 +162,13 @@
 
   <div class="grid">
     <div class="col50">
+
     </div>
 
   </div>
 
 
-  <div class="maingrid">
-    <div class="bu">balance+user</div>
-    <div class="b">buttom</div>
-    <div class="g">graphs
-      <div class="col50">
-        <canvas class="selling" id="selling"></canvas>
-      </div>
-    </div>
-  </div>
-
-
-
-
-  <!--Popup sellings options-->
-  <div class="popupselling" id="popupSelling">
-    <form class="container">
-      <h2>Selling options</h2>
-
-      <label for="energy">Quantity of energy</label>
-      <input type="number" required>
-
-      <label for="price">Price of energy</label>
-      <input type="number" required>
-
-      <button type="submit" class="sell">Sell energy</button>
-      <button type="button" class="cancel" onclick="closeSelling()">Close</button>
-    </form>
-  </div>
-  
-
-  <!--popup buying options-->
+  <!--popup buying options
   <div id="popupBuying">
     <form onmouseout="buy_energy()">
       <a href="#">prova1</a>
@@ -153,27 +176,11 @@
       <a href="#">prova3</a>
     </form>
   </div>
-
-
-  <div id="popup2">
-    <form onclick="buy_energy()"></form>
-    <input type="radio" id="list1" value="mettere valore">
-    <label for="list1">list1</label>
-
-    <input type="radio" id="list2" value="mettere valore">
-    <label for="list2">list2</label>
-
-    <input type="radio" id="list3" value="mettere valore">
-    <label for="list3">list3</label>
-  </div>
-
-
-
+  -->
 
 
   <label id="label">provaprovarpovaas</label>
 
-  <label id="balance">asasdasd</label>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -193,9 +200,10 @@
         datasets: [{
           fill: false,
           lineTension: 0,
-          backgroundColor: "rgba(0,0,255,1.0)",
+          backgroundColor: "rgb(38, 182, 5)",
           borderColor: "rgba(0,0,255,0.1)",
-          data: yValues
+          data: yValues,
+          pointRadius: 4
         }]
       },
       options: {
@@ -205,11 +213,51 @@
         }
       }
     });
-    }
+
+  }
+
   </script>
+
+  <script>    
+  function buyinGraph(){
+    var xyValues = [
+      {x:50, y:7},
+      {x:60, y:8},
+      {x:70, y:8},
+      {x:80, y:9},
+      {x:90, y:9},
+      {x:100, y:9},
+      {x:110, y:10},
+      {x:120, y:11},
+      {x:130, y:14},
+      {x:140, y:14},
+      {x:150, y:15}
+    ];
+
+    new Chart("buying", {
+      type: "scatter",
+      data: {
+        datasets: [{
+          pointRadius: 4,
+          pointBackgroundColor: "rgb(0,0,255)",
+          data: xyValues
+        }]
+      },
+      options: {
+        legend: {display: false},
+        scales: {
+          xAxes: [{ticks: {min: 40, max:160}}],
+          yAxes: [{ticks: {min: 6, max:16}}],
+        }
+      }
+    });  
+  }
+
+</script>
 
 <script>
   window.onload = sellingGraph();
+  window.onload = buyinGraph();
 </script>
   <!--label per aggiornare bilanci degli account-->
 
@@ -239,18 +287,7 @@
   
   </script>
 
-  <!--popup sellings-->
-  <script>
 
-  function openSelling(){
-    document.getElementById("popupSelling").style.display = "block";
-  }
-
-  function closeSelling(){
-    document.getElementById("popupSelling").style.display = "none";
-  }
-
-  </script>
 
 
   <!--popup buying options-->
@@ -582,41 +619,33 @@
     return false;
   }
 
+function yes(){
+  alert("ahahah")
+}
+
+
   function join_as_producer(){
-    var input =$('#producer').val();
 
+    contract.methods.join_as_producer().call({from:senderAddress, gas:120000}).then(function(result) {
+      console.log("input: " + input);
+    });
 
-    if (input == "yes" ) {
-      console.log("input number is " + input);
-
-
-      contract.methods.join_as_producer().call({from:senderAddress, gas:120000}).then(function(result) {
-        console.log("input: " + input);
-      });
-
-      contract.methods.join_as_producer().send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
-        console.log("Tx Hash: " + receipt.transactionHash);
-      });
-
-    }
-
-
-   
+    contract.methods.join_as_producer().send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
+      console.log("Tx Hash: " + receipt.transactionHash);
+    });
+    
     return false;
   }
 
   function buy_energy(){
-    var input =$('#input3').val();
-
+    var input =$('#Qnumber').val();
 
     if (input < 1) {
       alert("The numb should be higher than 0");
       return false;
     }
 
-
     console.log("input number is " + input);
-
 
     contract.methods.buy_energy(input).call({from:senderAddress, gas:120000}).then(function(result) {
       console.log("number in input: " + input);
@@ -629,9 +658,25 @@
     return false;
   }
 
+
+  function nuovabuy(){
+    let selectedOption;
+
+    const options = document.querySelectorAll('input[name="options"]');
+
+    options.forEach(option => {
+      option.addEventListener('change', event => {
+        selectedOption = event.target.value;
+      });
+    });
+
+    alert(selectedOption);
+  }
+
+
   function sell_energy(){
-    var amount =$('#input4').val();
-    var price =$('#input5').val();
+    var amount =$('#Enumber').val();
+    var price =$('#Eprice').val();
 
 
     if (amount < 1) {

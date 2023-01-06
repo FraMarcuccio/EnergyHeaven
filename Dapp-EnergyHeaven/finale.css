@@ -173,6 +173,7 @@ li {
 
 
 
+
 /*buttons*/
 .ETH button, .obtaintks button, .become_prod button{
   background-color: #4CAF50; /* Green */
@@ -194,7 +195,6 @@ li {
   width: 50%;
   font-size: 100%;
 }
-
 
 .become_prod button{
   padding: 10px 10px;

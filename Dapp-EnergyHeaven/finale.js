@@ -1,4 +1,51 @@
 
+
+
+
+
+
+  function openform(){
+    document.getElementById('loginform').style.display = 'block';
+  }
+
+  function closeform(){
+    document.getElementById('loginform').style.display = 'none';
+  }
+
+  function openform2(){
+    document.getElementById('loginform2').style.display = 'block';
+  }
+
+  function closeform2(){
+    document.getElementById('loginform2').style.display = 'none';
+  }
+
+
+
+  // Get the modal
+  var modal = document.getElementById('loginform');
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+
+    // Get the modal
+    var modal = document.getElementById('loginform2');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+
+
+
 function sellingGraph(){
   var xValues = [50,60,70,80,90,100,110,120,130,140,150];
   var yValues = [7,8,8,9,9,9,10,11,14,14,15];

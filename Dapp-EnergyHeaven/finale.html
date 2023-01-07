@@ -165,17 +165,13 @@
         
         <!--Popup buying options-->
         <div class="popupbuying" id="popupBuying">
-          <form class="container">
+          <form class="container" onsubmit="buy_energy(), getUserBalance(); return false;">
             <h2>Buying options</h2>
-  
-            <form onsubmit="buy_energy(), getUserBalance(); return false;">
               <label for="quantity">Quantity of energy</label>
               <input type="number" id="Qnumber" required>
               
               <button type="submit" class="sell">Buy energy</button>
               <button type="button" class="cancel" onclick="closeBuying()">Close</button>
-            </form>
-
           </form>
         </div>
       </div>

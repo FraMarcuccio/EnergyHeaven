@@ -184,7 +184,7 @@ async function initialise(contractAddress) {
 	// Set the address from which transactions are sent
 	accounts = await web3.eth.getAccounts();
 	// console.log(accounts[0])
-	senderAddress = accounts[1]
+	senderAddress = accounts[2]
 	console.log("Sender address set: " + senderAddress)
 
 	// Subscribe to all events by the contract
@@ -264,11 +264,11 @@ function yes(){
 
 function join_as_producer(){
 
-  contract.methods.join_as_producer().call({from:senderAddress}).then(function(result) {
+  contract.methods.join_as_producer().call({from:senderAddress, gas:1000000}).then(function(result) {
     console.log("input: " + input);
   });
 
-  contract.methods.join_as_producer().send({from:senderAddress}).on('receipt',function(receipt){
+  contract.methods.join_as_producer().send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
   
@@ -285,11 +285,11 @@ function buy_energy(){
 
   console.log("input number is " + input);
 
-  contract.methods.buy_energy(input).call({from:senderAddress, gas:120000}).then(function(result) {
+  contract.methods.buy_energy(input).call({from:senderAddress, gas:1000000}).then(function(result) {
     console.log("number in input: " + input);
   });
 
-  contract.methods.buy_energy(input).send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
+  contract.methods.buy_energy(input).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
 

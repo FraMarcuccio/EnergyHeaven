@@ -31,16 +31,85 @@
           <li class="l2" ><label class="balancel" id="balance">balance</label></li>
           <li class="l2" ><label class="rewardl" id="reward">reward</label></li>
           <li class="dropdown">
-            <button class="dropbtn">Sign In
+            <!--PHP here-->
+            <button class="dropbtn" onclick="openform2()">Sign In
               <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-              <button class="login">LogIn</button>
+              <button class="login" onclick="openform()">LogIn</button>
               <button class="logout">LogOut</button>
             </div>
           </li>
         </ul>
       
+    </div>
+
+<!--registrazione-->
+
+    <div id="loginform2" class="loginform">
+      <span onclick="closeform2()" class="close" title="Close form">&times;</span>
+      
+      <form class="formcontent animate" action="registration.php" method="post">
+
+        <div class="img">
+          <img src="" alt="" class="">
+        </div>
+
+        <div class="cform">
+          <label for="uname"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" name="uname" required>
+    
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="psw" required>
+          
+          <button type="submit" name="registerbtn"    class="loginbutton">Register</button>
+          <!--name="registerbtn"-->
+        </div>
+
+        <div class="cform">
+          <button type="button" onclick="closeform2()" class="cancelbutton">Cancel</button>
+        </div>
+
+      </form>
+
+    </div>
+
+
+    
+
+
+<!--login-->
+
+
+    <div id="loginform" class="loginform">
+      <span onclick="closeform()" class="close" title="Close form">&times;</span>
+      
+      <form class="formcontent animate" action="login.php">
+
+        <div class="img">
+          <img src="" alt="" class="">
+        </div>
+
+        <div class="cform">
+          <label for="uname"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" name="uname" required>
+    
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="psw" required>
+    
+          <button type="submit" name="loginbtn" class="loginbutton">Login</button>
+
+          <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+          </label>
+        </div>
+
+        <div class="cform">
+          <button type="button" onclick="closeform()" class="cancelbutton">Cancel</button>
+          <span class="psw">Forgot <a href="#">password</a></span>
+        </div>
+
+      </form>
 
     </div>
 
@@ -126,24 +195,15 @@
 
 
 
-
+  <!--Per i grafici, guardare come fare ad inserire nei valori X/Y i dati dal contratto-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elliptic/6.3.3/elliptic.min.js"></script>
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/web3.min.js"></script>
     <!--javascript-->
     <script src="finale.js"></script>
 
-  <!--Per i grafici, guardare come fare ad inserire nei valori X/Y i dati dal contratto-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
- 
-
-<script>
-
-
-
-
-
-</script>
 
 
 

@@ -138,7 +138,7 @@ document.getElementById("reward").innerHTML = 'esce questa scritta quando carica
 
 
 // Set the contract address
-var contractAddress = '0xDe84F0D55BB4d3e468aF203d231c5F5AbA7bDAbF';
+var contractAddress = '0x9d4b0989322EDA0d36Bad7edBB9e987D45D3dee4';
 // Insert your contract address there
 
 // Set the relative URI of the contract’s skeleton (with ABI)
@@ -184,7 +184,7 @@ async function initialise(contractAddress) {
 	// Set the address from which transactions are sent
 	accounts = await web3.eth.getAccounts();
 	// console.log(accounts[0])
-	senderAddress = accounts[2]
+	senderAddress = accounts[1]
 	console.log("Sender address set: " + senderAddress)
 
 	// Subscribe to all events by the contract

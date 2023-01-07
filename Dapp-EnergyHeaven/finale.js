@@ -478,9 +478,6 @@ async function initialise(contractAddress) {
 
 }
 
-function updateDisplayedInformation() {
-
-}
 
 
 

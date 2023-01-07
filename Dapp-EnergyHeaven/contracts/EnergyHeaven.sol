@@ -4,12 +4,16 @@ pragma solidity >=0.4.0 <0.9.0;
 contract EnergyHeaven{
     address payable public minter;
 
-    uint public constant OPERATIONS_FOR_REWARDING = 50;
+    uint public constant OPERATIONS_FOR_REWARDING = 5;
     uint private operation_counter;
-    mapping(address => uint) private selling_history;
+    struct Users {
+        uint selling_history;
+        uint balance;
+        uint rewards_obt;
+    }
 
     address[] producers;
-    mapping(address => uint) public userBalance; // balance dei token di ogni utente
+    mapping(address => Users) public users; // balance dei token di ogni utente
 
 
     struct Selling {
@@ -18,14 +22,12 @@ contract EnergyHeaven{
     }
     mapping(address => Selling) public energyList; // listino vendita
 
-    uint public piggyBank = 1000;
+    uint public piggyBank;
 
     uint public constant JOIN_AMOUNT = 1; // quota iniziale per entrare a far parte dei venditori
     uint public constant PRICE = 2 * 1e15; // 2 x 10^{15}. IE 2 finney
     uint public constant REVERSE_EXC_VALUE = 1 * 1e15; // 1 x 10^{15}. IE 1 finney
 
-    event AcquiringTokens(address user, uint tokens);
-    event TokensToEth(address user, uint tokens);
     event JoinedAsProducer(address user);
     event EnergyBought(address buyer, uint bought_amount);
     event piggyBankBroken();
@@ -33,10 +35,19 @@ contract EnergyHeaven{
     constructor(){
         minter = payable(msg.sender);
         operation_counter = 0;
+        piggyBank = 1000;
     }
 
+    function get_my_balance() public view returns (uint){
+        return users[msg.sender].balance;
+    }  
+
+    function get_my_rewards() public view returns (uint){
+        return users[msg.sender].rewards_obt;
+    }   
+
     function join_as_producer() public{
-        require(userBalance[msg.sender] >= JOIN_AMOUNT, "Not enough tokens");
+        require(users[msg.sender].balance >= JOIN_AMOUNT, "Not enough tokens");
         //require(!producers.contains(msg.sender), "Already a producer"); non esiste il metodo contains. trovare alternativa
         
         //scorro array per vedere se esiste indirizzo corrispondente a quello fornito
@@ -46,13 +57,13 @@ contract EnergyHeaven{
             }
         }
         
-        userBalance[msg.sender] -= JOIN_AMOUNT;
+        users[msg.sender].balance -= JOIN_AMOUNT;
         piggyBank += JOIN_AMOUNT;
         producers.push(msg.sender);
         emit JoinedAsProducer(msg.sender);
-        selling_history[msg.sender] = 0;
+        users[msg.sender].selling_history = 0;
 
-        if(operation_counter == OPERATIONS_FOR_REWARDING)
+        if(operation_counter >= OPERATIONS_FOR_REWARDING)
             breaking_piggyBank();
     }
 
@@ -60,39 +71,38 @@ contract EnergyHeaven{
         uint part = 0;
         uint total_history = 0;
         for(uint i=0; i<producers.length; i++){
-            total_history += selling_history[producers[i]];
+            total_history += users[producers[i]].selling_history;
         }
         part = piggyBank / total_history;
         for(uint i=0; i<producers.length; i++){
-            uint reward = part * selling_history[producers[i]];
-            userBalance[producers[i]] += reward;
+            uint reward = part * users[producers[i]].selling_history;
+            users[producers[i]].balance += reward;
             piggyBank -= reward;
-            selling_history[producers[i]] = 0;
+            users[producers[i]].selling_history = 0;
         }
         operation_counter = 0;
         emit piggyBankBroken();
+        users[msg.sender].balance += part;
     }
 
     function add_piggyBank(uint tokens) public{
-        require(userBalance[msg.sender] >= tokens, "Not enough tokens");
-        userBalance[msg.sender] -= tokens;
+        require( users[msg.sender].balance >= tokens, "Not enough tokens");
+        users[msg.sender].balance  -= tokens;
         piggyBank += tokens;
     }   
 
     function obtain_tokens() public payable{
         require(msg.value >= PRICE, "Not enough value for a token");
         uint amount = msg.value / PRICE;
-        userBalance[msg.sender] += amount;
-        emit AcquiringTokens(msg.sender, amount);
+        users[msg.sender].balance += amount;
     }
 
     function tokens_to_ETH(uint amount) public payable{
-        require(userBalance[msg.sender] >= amount, "Not enough tokens to convert");
+        require(users[msg.sender].balance  >= amount, "Not enough tokens to convert");
         payable(msg.sender).transfer(amount*REVERSE_EXC_VALUE);
         //(bool sent, bytes memory data) = msg.sender.call{value: amount*REVERSE_EXC_VALUE}("");
         //require(sent, "Failed to send Ether");
-        userBalance[msg.sender] -= amount;
-        emit TokensToEth(msg.sender,amount);
+        users[msg.sender].balance  -= amount;
         
     }
 
@@ -110,7 +120,7 @@ contract EnergyHeaven{
         
         energyList[msg.sender].amount += amount;
         energyList[msg.sender].price = price;
-        selling_history[msg.sender] += amount;
+        users[msg.sender].selling_history += amount;
         operation_counter += 1;
     }
 
@@ -132,7 +142,7 @@ contract EnergyHeaven{
         uint price; 
         (cheapest,price) = find_cheapest();
         require(cheapest.length>1, "Energy not available");
-        require(tokens>price, "Not enough tokens");
+        require(tokens>=price, "Not enough tokens");
 
         bought_amount = 0;
         uint i = 0;
@@ -140,8 +150,8 @@ contract EnergyHeaven{
             if(energyList[cheapest[i]].amount>0){
                 energyList[cheapest[i]].amount -= 1;
                 bought_amount += 1;
-                userBalance[cheapest[i]] += price;
-                userBalance[msg.sender] -= price;
+                users[cheapest[i]].balance += price;
+                users[msg.sender].balance -= price;
                 tokens -= price;
             }
             i +=1;

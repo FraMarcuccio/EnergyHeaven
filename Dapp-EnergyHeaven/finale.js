@@ -134,15 +134,18 @@ document.getElementById("reward").innerHTML = 'esce questa scritta quando carica
 
 
 
+
+
+
 // Set the contract address
-var contractAddress = '0x9A150c0f0C3Ec3c2B80A3D7653db89aa2b3fF544';
+var contractAddress = '0xDe84F0D55BB4d3e468aF203d231c5F5AbA7bDAbF';
 // Insert your contract address there
 
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "build/contracts/EnergyHeaven.json"
 
 // Set the address from which transactions are sent
-var senderAddress = '0xAD5a29f9bB5CfAC473Fd77856828961a761b6Afa';
+var senderAddress = '';
 // Insert your contract address there
 
 // Set the contract
@@ -181,7 +184,7 @@ async function initialise(contractAddress) {
 	// Set the address from which transactions are sent
 	accounts = await web3.eth.getAccounts();
 	// console.log(accounts[0])
-	senderAddress = accounts[0]
+	senderAddress = accounts[2]
 	console.log("Sender address set: " + senderAddress)
 
 	// Subscribe to all events by the contract
@@ -198,12 +201,9 @@ async function initialise(contractAddress) {
 }
 
 function updateDisplayedInformation() {
-getUserBalance();
-document.getElementById("reward").innerHTML = 'ciaocaicoascafas';
+  getUserBalance();
+  document.getElementById("reward").innerHTML = 'ciaocaicoascafas';
 }
-
-
-
 
 
 function getUserBalance(){
@@ -211,12 +211,7 @@ function getUserBalance(){
     console.log("balance: " );
     $("#balance").html(result);
   });
-
-  /*contract.methods.get_my_balance().send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
-    console.log("Tx Hash: " + receipt.transactionHash);
-  });*/
 }
-
 
 
 
@@ -269,11 +264,11 @@ function yes(){
 
 function join_as_producer(){
 
-  contract.methods.join_as_producer().call({from:senderAddress, gas:120000}).then(function(result) {
+  contract.methods.join_as_producer().call({from:senderAddress}).then(function(result) {
     console.log("input: " + input);
   });
 
-  contract.methods.join_as_producer().send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
+  contract.methods.join_as_producer().send({from:senderAddress}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
   
@@ -302,7 +297,7 @@ function buy_energy(){
 }
 
 
-function nuovabuy(){
+/*function nuovabuy(){
   let selectedOption;
 
   const options = document.querySelectorAll('input[name="options"]');
@@ -314,7 +309,7 @@ function nuovabuy(){
   });
 
   alert(selectedOption);
-}
+}*/
 
 
 function sell_energy(){

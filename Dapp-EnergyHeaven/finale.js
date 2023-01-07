@@ -135,7 +135,7 @@ document.getElementById("reward").innerHTML = 'esce questa scritta quando carica
 
 
 // Set the contract address
-var contractAddress = '0x2264abE36DE264646C96f00f0c632DAaBf493bc6';
+var contractAddress = '0x9A150c0f0C3Ec3c2B80A3D7653db89aa2b3fF544';
 // Insert your contract address there
 
 // Set the relative URI of the contract’s skeleton (with ABI)
@@ -207,9 +207,14 @@ document.getElementById("reward").innerHTML = 'ciaocaicoascafas';
 
 
 function getUserBalance(){
-  contract.methods.userBalance(senderAddress).call({from:senderAddress}).then(function(result) { // A promise in action
-  $("#balance").html(result);
-});//.catch((error) => { console.error(error); });
+  contract.methods.get_my_balance().call({from:senderAddress, gas:120000}).then(function(result) {
+    console.log("balance: " );
+    $("#balance").html(result);
+  });
+
+  /*contract.methods.get_my_balance().send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
+    console.log("Tx Hash: " + receipt.transactionHash);
+  });*/
 }
 
 

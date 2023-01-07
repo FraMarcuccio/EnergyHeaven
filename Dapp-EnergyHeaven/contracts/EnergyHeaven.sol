@@ -141,7 +141,7 @@ contract EnergyHeaven{
         address[] memory cheapest;
         uint price; 
         (cheapest,price) = find_cheapest();
-        require(cheapest.length>1, "Energy not available");
+        require(cheapest.length>=1, "Energy not available");
         require(tokens>=price, "Not enough tokens");
 
         bought_amount = 0;

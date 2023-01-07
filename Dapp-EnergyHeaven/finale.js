@@ -134,287 +134,6 @@ document.getElementById("reward").innerHTML = 'esce questa scritta quando carica
 
 
 
-function getUserBalance(){
-  contract.methods.userBalance(senderAddress).call({from:senderAddress, gas: 120000}).then(function(result) { // A promise in action
-  $("#balance").html(result);
-}).catch((error) => { console.error(error); });
-}
-
-
-
-//aggiorna continuamente il valore mentre la pagina è aperta, da provare non sono convintissimo funzioni correttamente
-function addLoadEvent(func){
-  var oldload =window.onload;
-  if(typeof window.onload != 'function'){
-    window.onload = func;
-  }
-  else{
-    window.onload = func;
-    if(oldload){
-      oldload();
-    }
-    func();
-  }
-}
-
-addLoadEvent(function(){ 
-  document.getElementById("reward").innerHTML = 'ciaocaicoascafas';
-  getUserBalance();
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Set contract ABI
-var contractAbi = [
-  {
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "tokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "AcquiringTokens",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "tokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "TokensToEth",
-    "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "JOIN_AMOUNT",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "PRICE",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "REVERSE_EXC_VALUE",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "energyList",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "minter",
-    "outputs": [
-      {
-        "internalType": "address payable",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "piggyBank",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "userBalance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "join_as_producer",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "obtain_tokens",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokens_to_ETH",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
-  },
-  {
-    "inputs": [],
-    "name": "self_distruct",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      }
-    ],
-    "name": "sell_energy",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "buy_energy",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "result",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "bought_amount",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
-]
-
-
 // Set the contract address
 var contractAddress = '0x2264abE36DE264646C96f00f0c632DAaBf493bc6';
 // Insert your contract address there
@@ -474,16 +193,24 @@ async function initialise(contractAddress) {
       console.log(event);
   });
 
-
+  updateDisplayedInformation();
 
 }
 
 function updateDisplayedInformation() {
-
+getUserBalance();
+document.getElementById("reward").innerHTML = 'ciaocaicoascafas';
 }
 
 
 
+
+
+function getUserBalance(){
+  contract.methods.userBalance(senderAddress).call({from:senderAddress}).then(function(result) { // A promise in action
+  $("#balance").html(result);
+});//.catch((error) => { console.error(error); });
+}
 
 
 

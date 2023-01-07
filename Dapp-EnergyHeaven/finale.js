@@ -129,7 +129,18 @@ function closeBuying(){
 }
 
 
+
 document.getElementById("reward").innerHTML = 'esce questa scritta quando carica tutta la pagina';
+
+
+
+function getUserBalance(){
+  contract.methods.userBalance(senderAddress).call({from:senderAddress, gas: 120000}).then(function(result) { // A promise in action
+  $("#balance").html(result);
+}).catch((error) => { console.error(error); });
+}
+
+
 
 //aggiorna continuamente il valore mentre la pagina è aperta, da provare non sono convintissimo funzioni correttamente
 function addLoadEvent(func){
@@ -152,11 +163,6 @@ addLoadEvent(function(){
 });
 
 
-function getUserBalance(){
-  contract.methods.userBalance(senderAddress).call({from:senderAddress, gas: 120000}).then(function(result) { // A promise in action
-  $("#balance").html(result);
-}).catch((error) => { console.error(error); });
-}
 
 
 
@@ -165,19 +171,6 @@ function getUserBalance(){
 
 
 
-//label per aggiornare bilanci degli account
-
-    
-
-
-window.onload = addLoadEvent();
-
- // Initialisation of Web3
- if (typeof web3 !== 'undefined') {
-  web3 = new Web3(web3.currentProvider);
-} else {
-  web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:7545"));
-}
 
 
 
@@ -426,12 +419,71 @@ var contractAbi = [
 var contractAddress = '0x2264abE36DE264646C96f00f0c632DAaBf493bc6';
 // Insert your contract address there
 
+// Set the relative URI of the contract’s skeleton (with ABI)
+var contractJSON = "build/contracts/EnergyHeaven.json"
+
 // Set the address from which transactions are sent
 var senderAddress = '0xAD5a29f9bB5CfAC473Fd77856828961a761b6Afa';
 // Insert your contract address there
 
 // Set the contract
-var contract = new web3.eth.Contract(contractAbi, contractAddress);
+var contract = null;
+
+
+
+
+$(window).on('load', function() {
+  initialise(contractAddress);
+});    
+
+async function initialise(contractAddress) {
+  // Initialisation of Web3
+  if (typeof web3 !== 'undefined') {
+   web3 = new Web3(web3.currentProvider);
+ } else {
+   web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:7545"));
+ }
+
+  // Load the ABI. We await the loading is done through "await"
+  // More on the await operator: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await
+  await $.getJSON(contractJSON,
+    function( contractData ) { // Use of IIFEs: https://developer.mozilla.org/en-US/docs/Glossary/IIFE
+      // console.log(contractAbi);
+      contract = new web3.eth.Contract(contractData.abi, contractAddress);
+    }
+  ).catch((error) => { console.error(error); });
+  // Arrow funcction expression at work. For further info: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+
+  if (!contract) {
+    console.error("No contract loaded.");
+    return false;
+  }
+
+	// Set the address from which transactions are sent
+	accounts = await web3.eth.getAccounts();
+	// console.log(accounts[0])
+	senderAddress = accounts[0]
+	console.log("Sender address set: " + senderAddress)
+
+	// Subscribe to all events by the contract
+	contract.events.allEvents(
+	callback=function(error, event){ // A "function object". Explained here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions#The_function_expression_(function_expression)
+      if (error) {
+        console.error(error)
+      }
+      console.log(event);
+  });
+
+
+
+}
+
+function updateDisplayedInformation() {
+
+}
+
+
+
 
 
 

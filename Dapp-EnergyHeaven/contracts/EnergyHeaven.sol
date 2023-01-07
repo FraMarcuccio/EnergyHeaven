@@ -63,7 +63,7 @@ contract EnergyHeaven{
         emit JoinedAsProducer(msg.sender);
         users[msg.sender].selling_history = 0;
 
-        if(operation_counter == OPERATIONS_FOR_REWARDING)
+        if(operation_counter >= OPERATIONS_FOR_REWARDING)
             breaking_piggyBank();
     }
 
@@ -142,7 +142,7 @@ contract EnergyHeaven{
         uint price; 
         (cheapest,price) = find_cheapest();
         require(cheapest.length>1, "Energy not available");
-        require(tokens>price, "Not enough tokens");
+        require(tokens>=price, "Not enough tokens");
 
         bought_amount = 0;
         uint i = 0;

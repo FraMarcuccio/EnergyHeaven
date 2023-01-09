@@ -33,7 +33,7 @@ if(isset($_POST['registerbtn']))
 if(isset($_POST["uname"]) && isset($_POST["psw"]))
 {
     // check if user exist.
-    $file=fopen("db.txt","r");
+    $file=fopen("registration.txt","r");
     $finduser = false;
     while(!feof($file))
     {
@@ -52,20 +52,34 @@ if(isset($_POST["uname"]) && isset($_POST["psw"]))
     {
         echo $_POST["uname"];
         echo ' existed!\r\n';
-        include 'finale.html';
+        //include 'finale.html';
+        echo '<script>
+          alert("User existed!, already registered");
+          setTimeout(function(){ window.location = "finale.php" }, 1000);
+        </script>';        
+
     }
     else
     {
-        $file = fopen("db.txt", "a");
-        fputs($file,$_POST["uname"].",".$_POST["psw"]."\r\n");
-        fclose($file);
-        echo $_POST["uname"];
-        echo " registered successfully!";
+      $file = fopen("registration.txt", "a");
+      fputs($file,$_POST["uname"].",".$_POST["psw"]."\r\n");
+      fclose($file);
+      echo $_POST["uname"];
+
+      echo " registered successfully!";
+      echo '<script>
+      alert("Registered successfully!");
+      setTimeout(function(){ window.location = "finale.php" }, 1000);
+    </script>';   
+
+      //termina la pagina php e ritorna alla pagina che l'ha richiamata ovvero quella html
+      //header("Location: registration.php"); 
+      //exit;
     }
 }
 else
 {
-    include 'finale.html';
+    include 'finale.php';
 }
 
 

@@ -1,47 +1,60 @@
+/*function onlyThisButton(){
+  // Seleziona il bottone logout e assegna un gestore per l'evento del click
+  document.querySelector("#bottonelog").addEventListener("click", function() {
+    // Invoca l'azione del form quando viene cliccato il bottone
+    document.querySelector("#formlog").submit();
+  });
+}*/
+
+//solo il bottone premuto chiama la pagina php, agisce come action del form
+document.getElementById("bottonelog").addEventListener("click", function() {
+  window.location.href = "logout.php";
+});
+
+
+let phpvariable = document.getElementById('hiddenValue').value;
 
 
 
 
+function openform(){
+  document.getElementById('loginform').style.display = 'block';
+}
+
+function closeform(){
+  document.getElementById('loginform').style.display = 'none';
+}
+
+function openform2(){
+  document.getElementById('loginform2').style.display = 'block';
+}
+
+function closeform2(){
+  document.getElementById('loginform2').style.display = 'none';
+}
 
 
-  function openform(){
-    document.getElementById('loginform').style.display = 'block';
+
+// Get the modal
+var modal = document.getElementById('loginform');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
   }
+}
 
-  function closeform(){
-    document.getElementById('loginform').style.display = 'none';
+
+// Get the modal
+var modal = document.getElementById('loginform2');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
   }
-
-  function openform2(){
-    document.getElementById('loginform2').style.display = 'block';
-  }
-
-  function closeform2(){
-    document.getElementById('loginform2').style.display = 'none';
-  }
-
-
-
-  // Get the modal
-  var modal = document.getElementById('loginform');
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
-
-
-    // Get the modal
-    var modal = document.getElementById('loginform2');
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
+}
 
 
 
@@ -138,7 +151,7 @@ document.getElementById("reward").innerHTML = 'esce questa scritta quando carica
 
 
 // Set the contract address
-var contractAddress = '0x9d4b0989322EDA0d36Bad7edBB9e987D45D3dee4';
+var contractAddress = '0x85625cf0ddE3dD5dBCf9266774552e9a8577399D';
 // Insert your contract address there
 
 // Set the relative URI of the contract’s skeleton (with ABI)
@@ -153,9 +166,28 @@ var contract = null;
 
 
 
+let valori;
+var letto;
+var entratoelse;
+
+
+function leggiFile() {
+  $.ajax({
+    type: "POST",
+    url: "readfile.php",
+    data: { action: 'read' }
+  }).done(function(data) {
+    //console.log(data);
+    valori = data.split('\n');
+    //console.log(valori);
+  });
+}
+
 
 $(window).on('load', function() {
+  leggiFile();
   initialise(contractAddress);
+  //alert (session);
 });    
 
 async function initialise(contractAddress) {
@@ -183,8 +215,118 @@ async function initialise(contractAddress) {
 
 	// Set the address from which transactions are sent
 	accounts = await web3.eth.getAccounts();
+
+
+  //qui va l'interazione php contract
+
+
+  //interazione php session con contract blockchain
+//console.log("sessione"+phpvariable);
+
+let mapvalue = new Map(); //tiene gli address come chiavi
+let mapkey = new Map(); //tiene gli account session come chiavi
+
+var indirizzo;
+var sessione;
+
+
+$.when(leggiFile()).done(function() {
+  letto = true;
+
+ // stampa a schermo l'array valori solo dopo che è stat eseguita la funzione che lo riempie
+});
+
+if(letto){
+  console.log("primo valore dell'array: " + valori[0]);
+  console.log("secondo valore dell'array: " + valori[1]);
+  console.log("dimensione dell'array: "+valori.length);
+  for(i = 0; i< valori.length-2; i++){
+    console.log("iteratore: "+ i);
+    mapkey.set(valori[i], valori[i+1]); //prima sessione poi address
+    mapvalue.set(valori[i+1], valori[i]); //prima address poi sessione
+    console.log("sessione: " + mapvalue.get(valori[i+1]));
+    console.log("address: "+ mapkey.get(valori[i]));
+
+  }
+}
+
+
+  
+
+if(phpvariable == 'nullo'){ //controllo se c'è sessione attiva
+  console.log("non è attiva la sessione");
+}
+else{
+  console.log("c'è sessione con: " +phpvariable);
+
+  //se la sessione è attiva allora controllo se è già salvata in map
+  if(mapkey.has(phpvariable)){ 
+    console.log("l'accaunt session è già mappato");
+    var i = 0;
+    console.log(i);
+    console.log(accounts[0]);
+
+    indirizzo = mapkey.get(phpvariable);
+    sessione = mapvalue.get(indirizzo);
+
+    console.log("indirizzo  "+mapkey.get(phpvariable));
+    console.log("sessione  "+mapvalue.get(indirizzo));
+
+  }
+  else{
+
+    //se non è salvata allora imposto counter i e ciclo per controllare se address account sono mappati
+    while(mapvalue.has(accounts[i])){ //finchè trovi address mappati cicla
+      i++;
+      console.log(accounts[i]);
+      console.log("address è già salvato");
+    }
+    //se trovo un address non mappato esco dal ciclo e setto la sessione corrente con l'address non mappato
+    mapkey.set(phpvariable,accounts[i]);
+    //prima ho settato l'address in valore alla sessione, adesso setto la sessione in base all'address in modo da poter avere un return della key in base all'address
+    mapvalue.set(accounts[i],phpvariable);
+
+    console.log("size mapvalue: " + mapvalue.size);
+    console.log("size mapkey: " + mapkey.size);
+
+    sessione = mapvalue.get(accounts[i]);
+    indirizzo = mapkey.get(phpvariable);
+
+    console.log("get key " +mapvalue.get(accounts[i]));
+    console.log("get values " +mapkey.get(phpvariable));
+
+    entratoelse = 1;
+
+
+
+  }
+
+  if(entratoelse == 1){
+
+    scrivifile(sessione);
+    scrivifile(indirizzo);
+
+  }
+  /*else{
+
+    indirizzo = mapvalue.get(phpvariable);
+    sessione = mapkey.get(indirizzo);
+  }*/
+
+}
+
+//restituisce account[i] mappato con la sessione corrente
+senderAddress = indirizzo;
+console.log("value/address return: "+senderAddress);
+
+console.log("key/session return: "+sessione);  
+
+//interazione php session con contract blockchain
+
+
+
 	// console.log(accounts[0])
-	senderAddress = accounts[2]
+	//senderAddress = accounts[2]
 	console.log("Sender address set: " + senderAddress)
 
 	// Subscribe to all events by the contract
@@ -198,7 +340,65 @@ async function initialise(contractAddress) {
 
   updateDisplayedInformation();
 
+
 }
+
+
+function scrivifile(value){
+  $.ajax({
+    type: "POST",
+    url: "writefile.php",
+    data: value
+  });
+}
+
+
+/*async function readValuesFromFile() {
+  // Ottieni il contenuto del file utilizzando fetch()
+  const response = await fetch('mapping.txt');
+  const content = await response.text();
+
+  // Dividi il contenuto del file in un array di stringhe separate
+  const values = content.split('\n');
+  
+  // Fai qualcosa con gli elementi del array, ad esempio stampali a console
+  console.log(values);
+}*/
+
+/*async function writeValuesToFile(values) {
+  // Trasforma l'array o il valore in una stringa
+  const content = Array.isArray(values) ? values.join('\n') : values;
+
+  console.log("chiamato metodo");
+
+  // Scrivi il contenuto nel file utilizzando fetch() e il metodo PUT
+  await fetch('mapping.txt', {
+    method: 'POST',
+    body: content
+  });
+  console.log("chiamato ciclo?");
+
+}*/
+
+/*async function writeValueToFile(value) {
+  // Invia il valore al server utilizzando fetch() e il metodo POST
+  const response = await fetch('writefile.php', {
+    method: 'POST',
+    body: value
+  });
+
+  // Controlla se la scrittura nel file è avvenuta con successo
+  if (response.ok) {
+    console.log('Il valore è stato scritto nel file con successo');
+  } else {
+    console.error('Si è verificato un errore durante la scrittura nel file');
+  }
+}*/
+
+
+
+
+
 
 function updateDisplayedInformation() {
   getUserBalance();
@@ -207,11 +407,20 @@ function updateDisplayedInformation() {
 
 
 function getUserBalance(){
-  contract.methods.get_my_balance().call({from:senderAddress, gas:120000}).then(function(result) {
+  contract.methods.get_my_balance().call({from:senderAddress, gas:100000000}).then(function(result) {
     console.log("balance: " );
     $("#balance").html(result);
   });
 }
+
+
+//Ricarica ogni 1000 millisecondi ? controllare se funziona bene
+setInterval(function(){
+  $('#reward');
+}, 1000);
+
+
+
 
 
 
@@ -246,11 +455,11 @@ function tokens_to_ETH(){
 
   console.log("input number is " + input);
 
-  contract.methods.tokens_to_ETH(input).call({from:senderAddress, gas:120000}).then(function(result) {
+  contract.methods.tokens_to_ETH(input).call({from:senderAddress, gas:100000000}).then(function(result) {
     console.log("number in input: " + input);
   });
 
-  contract.methods.tokens_to_ETH(input).send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
+  contract.methods.tokens_to_ETH(input).send({from:senderAddress, gas:100000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
 
@@ -264,11 +473,11 @@ function yes(){
 
 function join_as_producer(){
 
-  contract.methods.join_as_producer().call({from:senderAddress, gas:1000000}).then(function(result) {
+  contract.methods.join_as_producer().call({from:senderAddress, gas:100000000}).then(function(result) {
     console.log("input: " + input);
   });
 
-  contract.methods.join_as_producer().send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
+  contract.methods.join_as_producer().send({from:senderAddress, gas:100000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
   
@@ -285,11 +494,11 @@ function buy_energy(){
 
   console.log("input number is " + input);
 
-  contract.methods.buy_energy(input).call({from:senderAddress, gas:1000000}).then(function(result) {
+  contract.methods.buy_energy(input).call({from:senderAddress, gas:100000000}).then(function(result) {
     console.log("number in input: " + input);
   });
 
-  contract.methods.buy_energy(input).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
+  contract.methods.buy_energy(input).send({from:senderAddress, gas:100000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
 
@@ -332,12 +541,12 @@ function sell_energy(){
   console.log("price is " + price);
 
 
-  contract.methods.sell_energy(amount,price).call({from:senderAddress, gas:120000}).then(function(result) {
+  contract.methods.sell_energy(amount,price).call({from:senderAddress, gas:100000000}).then(function(result) {
     console.log("amount in input " + amount);
     console.log("price in input " + price);
   });
 
-  contract.methods.sell_energy(amount,price).send({from:senderAddress, gas:120000}).on('receipt',function(receipt){
+  contract.methods.sell_energy(amount,price).send({from:senderAddress, gas:100000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
 

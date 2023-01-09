@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,34 +14,47 @@
   <!--Si può cambiare con il file BS locale-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-
-
   <title>HTML finale</title>
 </head>
 
 <body>
+
+<?php
+
+session_start();
+
+if(isset($_SESSION['user'])){
+  $account =$_SESSION['user'];
+}
+else{
+  $account = 'nullo';
+}
+
+?>
+
+<!--passa variabile sessione account in un element html nascosto così posso prenderlo nel js-->
+<input type="hidden" id="hiddenValue" value="<?php echo $account; ?>">
 
 
 
   <div class="maingrid">
     <div class="user">
 
-
-        <ul class="ull">
-          <li class="l1"><a href="#home">Home</a></li>
-          <li class="l2" ><label class="balancel" id="balance">balance</label></li>
-          <li class="l2" ><label class="rewardl" id="reward">reward</label></li>
-          <li class="dropdown">
-            <!--PHP here-->
-            <button class="dropbtn" onclick="openform2()">Sign In
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-              <button class="login" onclick="openform()">LogIn</button>
-              <button class="logout">LogOut</button>
-            </div>
-          </li>
-        </ul>
+      <ul class="ull">
+        <li class="l1"><a href="#home">Home</a></li>
+        <li class="l2" ><label class="balancel" id="balance">balance</label></li>
+        <li class="l2" ><label class="rewardl" id="reward">reward</label></li>
+        <li class="dropdown">
+          <!--PHP here-->
+          <button class="dropbtn" onclick="openform2()">Sign Up
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <button class="login" onclick="openform()">LogIn</button>
+            <button id="bottonelog" class="logout" >LogOut</button>
+          </div>
+        </li>
+      </ul>
       
     </div>
 
@@ -84,7 +98,7 @@
     <div id="loginform" class="loginform">
       <span onclick="closeform()" class="close" title="Close form">&times;</span>
       
-      <form class="formcontent animate" action="login.php">
+      <form class="formcontent animate" action="login.php" method="post">
 
         <div class="img">
           <img src="" alt="" class="">
@@ -98,20 +112,26 @@
           <input type="password" placeholder="Enter Password" name="psw" required>
     
           <button type="submit" name="loginbtn" class="loginbutton">Login</button>
-
+          
+          <!--
           <label>
             <input type="checkbox" checked="checked" name="remember"> Remember me
           </label>
+          -->
         </div>
 
         <div class="cform">
           <button type="button" onclick="closeform()" class="cancelbutton">Cancel</button>
+          <!--
           <span class="psw">Forgot <a href="#">password</a></span>
+          -->
         </div>
 
       </form>
 
     </div>
+
+
 
     <div class="button">
 
@@ -197,11 +217,14 @@
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/web3.min.js"></script>
-    <!--javascript-->
-    <script src="finale.js"></script>
+  
+  <!--file php che contiene javascript per passare le variabili nel file js linkato qui sotto-->
+  <!--javascript-->
+  <script src="finale.js"></script>
 
-
-
+<!--
+  <input type="hidden" id="hiddenValue" value="<?php //echo $phpVariable; ?>">
+-->
 
 </body>
 </html>

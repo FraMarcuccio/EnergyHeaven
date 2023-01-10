@@ -112,7 +112,7 @@ window.onclick = function(event2) {
 
 
 
-/*grafici
+//grafici
 function sellingGraph(){
   var xValues = [50,60,70,80,90,100,110,120,130,140,150];
   var yValues = [7,8,8,9,9,9,10,11,14,14,15];
@@ -184,7 +184,7 @@ function buyinGraph(){
     }
   });  
 }
-*/
+
 //grafici
 
 document.getElementById("reward").innerHTML = 'esce questa scritta quando carica tutta la pagina';
@@ -194,7 +194,7 @@ document.getElementById("reward").innerHTML = 'esce questa scritta quando carica
 //web3-------------------------------------------------------
 
 // Set the contract address
-var contractAddress = '0x796bfef9DD5De1B2C2Cc9A9Fea43976eE83912b3';
+var contractAddress = '0xdC3Dc05f7347c4216a77a88a89F055a2e1A367ca';
 // Insert your contract address there
 
 // Set the relative URI of the contract’s skeleton (with ABI)
@@ -448,14 +448,14 @@ function updateDisplayedInformation() {
 
 
 function getUserBalance(){
-  contract.methods.get_my_balance().call({from:senderAddress, gas:100000}).then(function(result) {
+  contract.methods.get_my_balance().call({from:senderAddress, gas:1000000}).then(function(result) {
     console.log("balance: " );
     $("#balance").html(result);
   });
 }
 
 function getUserRewards(){
-  contract.methods.get_my_rewards().call({from:senderAddress, gas:100000}).then(function(result) {
+  contract.methods.get_my_rewards().call({from:senderAddress, gas:1000000}).then(function(result) {
     console.log("rewards: " );
     $("#reward").html(result);
   });
@@ -503,11 +503,11 @@ function tokens_to_ETH(){
 
   console.log("input number is " + input);
 
-  contract.methods.tokens_to_ETH(input).call({from:senderAddress, gas:100000}).then(function(result) {
+  contract.methods.tokens_to_ETH(input).call({from:senderAddress, gas:1000000}).then(function(result) {
     console.log("number in input: " + input);
   });
 
-  contract.methods.tokens_to_ETH(input).send({from:senderAddress, gas:100000}).on('receipt',function(receipt){
+  contract.methods.tokens_to_ETH(input).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
 
@@ -521,11 +521,11 @@ function yes(){
 
 function join_as_producer(){
 
-  contract.methods.join_as_producer().call({from:senderAddress, gas:100000}).then(function(result) {
+  contract.methods.join_as_producer().call({from:senderAddress, gas:1000000}).then(function(result) {
     console.log("input: " + input);
   });
 
-  contract.methods.join_as_producer().send({from:senderAddress, gas:100000}).on('receipt',function(receipt){
+  contract.methods.join_as_producer().send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
   
@@ -542,11 +542,11 @@ function buy_energy(){
 
   console.log("input number is " + input);
 
-  contract.methods.buy_energy(input).call({from:senderAddress, gas:100000}).then(function(result) {
+  contract.methods.buy_energy(input).call({from:senderAddress, gas:1000000}).then(function(result) {
     console.log("number in input: " + input);
   });
 
-  contract.methods.buy_energy(input).send({from:senderAddress, gas:100000}).on('receipt',function(receipt){
+  contract.methods.buy_energy(input).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
 
@@ -589,12 +589,12 @@ function sell_energy(){
   console.log("price is " + price);
 
 
-  contract.methods.sell_energy(amount,price).call({from:senderAddress, gas:100000}).then(function(result) {
+  contract.methods.sell_energy(amount,price).call({from:senderAddress, gas:1000000}).then(function(result) {
     console.log("amount in input " + amount);
     console.log("price in input " + price);
   });
 
-  contract.methods.sell_energy(amount,price).send({from:senderAddress, gas:100000}).on('receipt',function(receipt){
+  contract.methods.sell_energy(amount,price).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
 
@@ -603,5 +603,5 @@ function sell_energy(){
 
 
 //funzioni grafici
-//window.onload = sellingGraph();
-//window.onload = buyinGraph();
+window.onload = sellingGraph();
+window.onload = buyinGraph();

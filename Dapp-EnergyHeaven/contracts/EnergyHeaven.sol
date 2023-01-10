@@ -6,6 +6,7 @@ contract EnergyHeaven{
 
     uint public constant OPERATIONS_FOR_REWARDING = 5;
     uint private operation_counter;
+    uint private total_history;
     struct Users {
         uint selling_history;
         uint balance;
@@ -35,6 +36,7 @@ contract EnergyHeaven{
     constructor(){
         minter = payable(msg.sender);
         operation_counter = 0;
+        total_history = 0;
         piggyBank = 1000;
     }
 
@@ -68,21 +70,18 @@ contract EnergyHeaven{
     }
 
     function breaking_piggyBank() private{
-        uint part = 0;
-        uint total_history = 0;
-        for(uint i=0; i<producers.length; i++){
-            total_history += users[producers[i]].selling_history;
-        }
-        part = piggyBank / total_history;
+        uint part = piggyBank / total_history;
         for(uint i=0; i<producers.length; i++){
             uint reward = part * users[producers[i]].selling_history;
             users[producers[i]].balance += reward;
             piggyBank -= reward;
             users[producers[i]].selling_history = 0;
+            users[producers[i]].rewards_obt += reward;
         }
         operation_counter = 0;
         emit piggyBankBroken();
         users[msg.sender].balance += part;
+        users[msg.sender].rewards_obt += part;
     }
 
     function add_piggyBank(uint tokens) public{
@@ -121,6 +120,7 @@ contract EnergyHeaven{
         energyList[msg.sender].amount += amount;
         energyList[msg.sender].price = price;
         users[msg.sender].selling_history += amount;
+        total_history += amount;
         operation_counter += 1;
     }
 

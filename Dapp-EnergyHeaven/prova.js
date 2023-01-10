@@ -110,17 +110,63 @@ window.onclick = function(event2) {
   }
 }
 
+let datigrafici;
+
+function leggiDatiGrafici() {
+  $.ajax({
+    type: "POST",
+    url: "readgraphdata.php",
+    data: { action: 'read' }
+  }).done(function(data) {
+    //console.log(data);
+    datigrafici = data.split('\n');
+    //console.log(valori);
+  });
+
+}
+
+$(window).on('load', function() {
+  leggiFile();
+  leggiDatiGrafici();
+  initialise(contractAddress);
+  //alert (session);
+});  
+
 
 
 //grafici
-function sellingGraph(){
-  var xValues = [50,60,70,80,90,100,110,120,130,140,150];
-  var yValues = [7,8,8,9,9,9,10,11,14,14,15];
+function sellingGraph(dati){
+ 
+  var j = 0;
+  var valori = [];
+
+  var length = dati.length;
+  for (var i = 0; i < length; i++){
+    //console.log(dati[i]);
+    if(dati[i].includes(senderAddress)){
+      console.log("true");
+      valori[j] = dati[i];
+      j++;
+      console.log(dati[i]);
+    } 
+  } 
+
+  //take buying data
+  j = 0;
+  var xValues = [];
+  var yValues = [];
+
+  for(var k = 0; k < valori.length; k++){
+    if(valori[k].includes(" B ")){
+      xValues[j] = valori[k].split(" ")[2];
+      yValues[j] = valori[k].split(" ")[2];
+      //console.log("valorik" + valori[k].split(" "));
+      j++;
+    }
+  }
   
-  var x2Values = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
-  var y2Values = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
-  
-  new Chart("selling", {
+
+  new Chart("buying", {
       type: "line",
       data: {
           labels: xValues,
@@ -129,7 +175,7 @@ function sellingGraph(){
               lineTension: 0,
               backgroundColor: "rgb(38, 182, 5)",
               borderColor: "rgba(0,0,255,0.1)",
-              data: yValues,
+              data: xValues,
               pointRadius: 4
           },
           {
@@ -137,20 +183,64 @@ function sellingGraph(){
               lineTension: 0,
               backgroundColor: "rgb(255, 0, 0)",
               borderColor: "rgb(255, 0, 0)",
-              data: y2Values,
+              data: yValues,
               pointRadius: 4
           }]
       },
       options: {
           legend: { display: false },
           scales: {
-              yAxes: [{ ticks: { min: 6, max: 22 } }],
+              yAxes: [{ ticks: { min: 0, max: 50 } }],
           }
       }
   });
+
+
+  //take selling data
+  j = 0;
+  var x2Values = [];
+  var y2Values = [];
+
+  for(var k = 0; k < valori.length; k++){
+    if(valori[k].includes(" S ")){
+      x2Values[j] = valori[k].split(" ")[2];
+      y2Values[j] = valori[k].split(" ")[3];
+      //console.log("valorik" + valori[k].split(" "));
+      j++;
+    }
+  }
+
+  new Chart("selling", {
+    type: "line",
+    data: {
+        labels: xValues,
+        datasets: [{
+            fill: false,
+            lineTension: 0,
+            backgroundColor: "rgb(0,0,255)",
+            borderColor: "rgba(0,0,255,0.1)",
+            data: x2Values,
+            pointRadius: 4
+        },
+        {
+            fill: false,
+            lineTension: 0,
+            backgroundColor: "rgb(255, 0, 0)",
+            borderColor: "rgb(0,0,255)",
+            data: y2Values,
+            pointRadius: 4
+        }]
+    },
+    options: {
+        legend: { display: false },
+        scales: {
+            yAxes: [{ ticks: { min: 0, max: 50 } }],
+        }
+    }
+});
 }
 
-
+/*
 function buyinGraph(){
   var xyValues = [
     {x:50, y:7},
@@ -184,7 +274,7 @@ function buyinGraph(){
     }
   });  
 }
-
+*/
 //grafici
 
 document.getElementById("reward").innerHTML = 'esce questa scritta quando carica tutta la pagina';
@@ -210,9 +300,20 @@ var contract = null;
 
 
 let valori;
+var datiletti;
 var letto;
 var entratoelse;
 
+
+
+function scriviDatiGrafici(value){
+  $.ajax({
+    type: "POST",
+    url: "writegraphdata.php",
+    data: value
+  });
+  console.log("scrittura fatta");
+}
 
 function leggiFile() {
   $.ajax({
@@ -227,11 +328,7 @@ function leggiFile() {
 }
 
 
-$(window).on('load', function() {
-  leggiFile();
-  initialise(contractAddress);
-  //alert (session);
-});    
+  
 
 async function initialise(contractAddress) {
   // Initialisation of Web3
@@ -278,7 +375,6 @@ $.when(leggiFile()).done(function() {
 
  // stampa a schermo l'array valori solo dopo che è stat eseguita la funzione che lo riempie
 });
-
 if(letto){
   console.log("primo valore dell'array: " + valori[0]);
   console.log("secondo valore dell'array: " + valori[1]);
@@ -291,6 +387,15 @@ if(letto){
     console.log("address: "+ mapkey.get(valori[i]));
 
   }
+}
+
+
+$.when(leggiDatiGrafici()).done(function() {
+  datiletti = true;
+});
+if(datiletti){
+  console.log(" i dati grafici letti sono: " + datigrafici);
+  sellingGraph(datigrafici);
 }
 
 
@@ -548,7 +653,14 @@ function buy_energy(){
 
   contract.methods.buy_energy(input).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
+    try {
+      scriviDatiGrafici(senderAddress + " B " + input );
+    }
+    catch(err) {
+      console.log(err);
+    }
   });
+
 
   return false;
 }
@@ -596,12 +708,20 @@ function sell_energy(){
 
   contract.methods.sell_energy(amount,price).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
+    try {
+      scriviDatiGrafici(senderAddress + " S " + amount + " " + price );
+    }
+    catch(err) {
+      console.log(err);
+    }
   });
+
+  
 
   return false;
 }
 
 
 //funzioni grafici
-window.onload = sellingGraph();
-window.onload = buyinGraph();
+//window.onload = sellingGraph();
+//window.onload = buyinGraph();

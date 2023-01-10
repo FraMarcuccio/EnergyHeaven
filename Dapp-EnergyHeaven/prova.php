@@ -186,9 +186,9 @@
 
     <div class="imgbox">
       <canvas class="selling" id="selling"></canvas>    
-      <!--
+      
       <canvas class="buying" id="buying"></canvas>
--->
+
     </div>
 
 

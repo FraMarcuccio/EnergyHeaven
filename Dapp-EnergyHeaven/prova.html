@@ -1,39 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-<link rel="stylesheet" href="finale.css">
+<link rel="stylesheet" href="prova.css">
 </head>
-
 
 <body>
 
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#news">News</a></li>
-    <li class="dropdown">
-      <button class="dropbtn">dropdown</button>
-      <div class="dropdown-content">
-        <button class="login">Login</button>
-        <button class="logout">Logout</button>
+  <div class="hero">
+    <nav>
+      <img src="logoedited.png" class="logo" id="menuBtrigger">
+      <p>Energy<span> Heaven</span></p>
+      <img src="notlogged.png" class="notlogged">
+      <img src="moon.png" id="light">
+      <ul>
+        <li><a href="">Balance</a></li>
+        <li><a href="">Reward</a></li>
+        <li><a href="" class="profile" onclick="togglemenu()">Profile</a></li>
+      </ul>
+
+      <!--
+      <div class="submenuwrap" id="submenuwrap">
+        <div class="submenu">
+          <div class="signin">
+            <img src="loginicon.png">
+            <h3>sessione</h3>
+
+            <a href="#" class="submenulink">
+              <p><span>login</span></p>
+            </a>
+          </div>
+          <hr>
+        </div>
       </div>
-    </li>
-  </ul>
+      -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    </nav>
+
+    <ul class="menuB">
+
+      <li>
+        <form action="">
+          <button class="obtbutton" type="submit">Obtain tokens</button>
+          <input type="number" id="input" required="required">  
+        </form>
+      </li>
+
+      <li>
+        <form action="">
+          <button type="submit">Become producer</button>
+        </form>
+      </li>
+
+      <li>
+        <form class="eth" onsubmit="tokens_to_ETH(), getUserBalance(); return false;">
+          <button type="submit">Convert token</button>
+          <input type="number" id="input2" required="required">
+        </form>      
+      </li>
+
+      <li>
+        <button class="opensell" onclick="openSelling()">Selling</button>
+      </li>
+
+      <li>
+        <button class="openbuy" onclick="openbuy()">Buying</button>
+      </li>
+    </ul>
 
 
-  <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+    <!--Popup buying options-->
+    <div class="popupbuying" id="popupBuying">
+      <form class="container" onsubmit="buy_energy(), getUserBalance(); return false;">
+        <h2>Buying options</h2>
+          <label for="quantity">Quantity of energy</label>
+          <input type="number" id="Qnumber" required>
+          
+          <button type="submit" class="sell">Buy energy</button>
+          <button type="button" class="cancel" onclick="closeBuying()">Close</button>
+      </form>
+    </div>
 
+    <!--Popup sellings options-->
+    <div class="popupselling" id="popupSelling">
+      <form class="container" onsubmit="sell_energy(); return false;">
+        <h2>Selling options</h2>
+
+        <label for="energy">Quantity of energy</label>
+        <input type="number" id="Enumber" required>
+
+        <label for="price">Price of energy</label>
+        <input type="number" id="Eprice" required>
+
+        <button type="submit" class="sell">Sell energy</button>
+        <button type="button" class="cancel" onclick="closeSelling()">Close</button>
+      </form>
+    </div>
+
+
+    
+    <!--
+    <div class="imgbox">
+      <img src="down.png" class="backimg">
+      <img src="up.png" class="upimg">
+    </div>
+      -->
+    <div class="graphbox">
+      <img src="down.png" class="grapha">
+      <img src="up.png" class="graphb">
+    </div>
+    
+  </div>
+
+
+  <script>
+
+    var light = document.getElementById("light");
+
+    let localData = localStorage.getItem("light");
+
+
+    if(localStorage.getItem("light") == null){
+      localStorage.setItem("light", "off");
+
+    }
+
+    if(localData == "on"){
+      light.src = "moon.png";
+      document.body.classList.remove("dark");
+    }
+    else if(localData == "off"){
+      light.src = "sun.png";
+      document.body.classList.add("dark");
+    }
+
+ 
+    light.onclick = function(){
+      document.body.classList.toggle("dark");
+      if(document.body.classList.contains("dark")){
+        light.src = "sun.png";
+        localStorage.setItem("light", "off");
+      }
+      else{
+        light.src = "moon.png";
+        localStorage.setItem("light", "on");
+      }
+    }
+
+  </script>
+
+  <script>
+
+    var menutrigger = document.getElementById("menuBtrigger");
+
+    menutrigger.onclick = function(){
+      document.body.classList.toggle('menuopen');
+    }
+
+  /*let item =document.querySelector('.menuBtrigger');
+  item.addEventListener("click", function(){
+    item.classList.toggle('menuopen');
+  });
+
+  document.querySelector('menuBtrigger').addEventListener("click", function(){
+    document.body.classList.toggle('openmenu');
+  });*/
+
+
+  </script>
+
+
+  <script>
+
+    let submenu = document.getElementById("submenuwrap");
+    
+    function togglemenu(){
+      submenu.classList.toggle("openmenu");
+    }
+
+  </script>
 
 
 <script>
-    
+  //popup selling and buying
+
+function openSelling(){
+  document.getElementById("popupSelling").style.display = "block";
+}
+
+function closeSelling(){
+  document.getElementById("popupSelling").style.display = "none";
+}
+
+function openbuy(){
+  document.getElementById("popupBuying").style.display = "block";
+}
+
+function closeBuying(){
+  document.getElementById("popupBuying").style.display = "none";
+}
+
 </script>
 
 
 </body>
+
 </html>

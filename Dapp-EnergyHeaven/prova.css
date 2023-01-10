@@ -1,0 +1,376 @@
+*{
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif, 'Poppins';
+  box-sizing: border-box;
+}
+
+:root{
+  --primary-color: #edf2fc;
+  --secondary-color: #212121;
+}
+
+.dark{
+  --primary-color: #212121;
+  --secondary-color: #edf2fc;
+}
+
+.hero{
+  height: 100vh;
+  width: 100%;
+  background: var(--primary-color);
+  font-family: sans-serif;
+  position: relative;
+}
+
+#light{
+  width: 30px;
+  cursor: pointer;
+}
+
+
+nav{
+  width: 99%;
+  margin: auto;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo{
+  width: 30px;
+  cursor: pointer;
+}
+
+nav ul li{
+  display: inline-block;
+  list-style: none;
+  margin: 10px 20px;
+}
+
+nav ul li a{
+  text-decoration: none;
+  color: var(--secondary-color);
+}
+
+nav ul li a:hover{
+  color: #ff4321;
+}
+
+.profile{
+  background: var(--secondary-color);
+  padding: 10px 18px;
+  text-decoration: none;
+  color: var(--primary-color);
+  display: inline-block;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+.hero span{
+  color: chartreuse;
+  line-height: 20px;
+  font-size: 40px;
+}
+
+.hero p{
+  color: var(--secondary-color);
+  line-height: 20px;
+  font-size: 40px;
+}
+
+.notlogged{
+  width: 50px;
+  cursor: pointer;
+}
+
+
+/*destra*/
+.imgbox{
+  width: 45%;
+  height: 80%;
+  position: absolute;
+  bottom: 0;
+  right: 100px;
+}
+
+.imgbox img{
+  height: 100%;
+  position: absolute;
+  left: 70%;
+  bottom: 0;
+  transform: translateX(-50%);
+  transition: bottom 1s, left 1s;
+}
+
+.imgbox:hover .backimg{
+  bottom: 40px;
+}
+
+.imgbox:hover .upimg{
+  left: 65%;
+}
+
+
+/*sinistra*/
+.graphbox {
+  width: 45%;
+  height: 80%;
+  position: absolute;
+  bottom: 0;
+  left: 100px;
+}
+
+.graphbox img {
+  height: 100%;
+  position: absolute;
+  right: 90%;
+  bottom: 0;
+  transform: translateX(50%);
+  transition: bottom 1s, right 1s;
+}
+
+.graphbox:hover .grapha{
+  bottom: 40px;
+}
+
+.graphbox:hover .graphb{
+  right: 85%;
+}
+
+
+/*menu bottoni*/
+
+.menuB{
+  bottom: 2;
+  left: 0;
+  position: fixed;
+  padding-top: 1%;
+  padding-right: 1%;
+  padding-bottom: 1%;
+  display: block;
+  z-index: 100;
+  background: var(--secondary-color);
+  list-style-type: none;
+  width: 25vw;
+  transform: translateX(-100%);
+  transition: all 1s cubic-bezier(.215, .61, .355, 1);
+  height: 60vh;
+}
+
+.menuB button{
+  display: block;
+  padding: 10px;
+  font-size: 15px;
+  display: inline-block;
+  margin: 15px;
+}
+
+.menuB input[type=number]{
+  width: 130px;
+  height: 30px;
+  display: inline-block;
+}
+
+.menuopen .menuB{
+  transform: translateX(0%);
+  box-shadow: 0 5px 20px rgba(0,0,0,.5); /*ombreggiatura*/
+
+}
+
+
+
+
+/*login menu*/
+.submenuwrap{
+  position: absolute;
+  top: 100%;
+  right: 10%;
+  width: 320px;
+  max-height: 400px ;
+  overflow: hidden;
+  transition: max-height 0.5s;
+}
+
+.submenuwrap.openmenu{
+  max-height: 0px;
+  z-index: 1000;
+}
+
+.submenu{
+  background-color: var(--secondary-color);
+  padding: 20px;
+  margin: 10px;
+}
+
+.signin{
+  display: flex;
+  align-items: center;
+}
+
+.signin h3{
+  font-weight: 500;
+  color: var(--secondary-color);
+}
+
+.signin img{
+  width: 60px;
+  border-radius: 5%;
+  margin-right: 15px;
+}
+
+.submenu hr{
+  border: 0;
+  height: 1px;
+  width: 100px;
+  background: var(--secondary-color);
+  margin: 15px 0 10px;
+}
+
+.submenulink p{
+  width: 100%;
+}
+
+.submenulink span{
+  font-size: 22px;
+}
+
+
+/*old*/
+
+.openbuy{
+  text-align: center;
+  background-color: blue;
+  color: white;
+  padding: 15px 15px;
+  border: black;
+  cursor: pointer;
+  opacity: 0.8;
+  float: left;
+  width: 90px;
+  position: relative;
+  border-radius: 12px;
+  margin: 4px 2px;
+  border: 1px solid black;
+}
+
+.opensell{
+  text-align: center;
+  background-color: green;
+  color: white;
+  padding: 15px 15px;
+  border: black;
+  cursor: pointer;
+  opacity: 0.8;
+  float: left;
+  width: 90px;
+  position: relative;
+  border-radius: 12px;
+  margin: 4px 2px;
+  border: 1px solid black;
+}
+
+
+
+
+
+
+.popupselling{ 
+  /*popup al centro
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  display: none;*/
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  display: none;
+}
+
+.popupbuying{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  display: none;
+}
+
+.container{
+  width: 0px;
+  padding: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container input[type=number]{
+  width: 30%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.container input[type=number]:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+.container label{
+  vertical-align: top;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.container .sell{
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  margin-bottom:10px;
+  opacity: 0.8;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  display: center;
+  justify-content: space-between;
+}
+
+.container .cancel{
+  background-color: red;
+  width: 30%;
+  padding: 16px 20px;
+  border: none;  
+  cursor: pointer;
+  opacity: 0.8;
+  margin-bottom:10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  display: center;
+  justify-content: space-between;
+}
+
+.container .sell:hover, .openbtn:hover, .cancel:hover{
+  opacity: 1;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}

@@ -7,7 +7,7 @@ session_start();
 if(isset($_SESSION['user'])){
   echo '<script>
   alert("already logged!");
-  setTimeout(function(){ window.location = "finale.php" }, 5000);
+  setTimeout(function(){ window.location = "prova.php" }, 5000);
 </script>';
 
   echo $_SESSION['user'];
@@ -16,7 +16,7 @@ if(isset($_SESSION['user'])){
 else{
   echo '<script>
   alert("not logged!");
-  setTimeout(function(){ window.location = "finale.php" }, 5000);
+  setTimeout(function(){ window.location = "prova.php" }, 5000);
 </script>';
 }
 
@@ -73,7 +73,7 @@ if (isset($_POST["uname"]) && isset($_POST["psw"])) {
     if($psw == $_POST['psw']){
       echo '<script>
       alert("Loged successfully!");
-      setTimeout(function(){ window.location = "finale.php" }, 5000);
+      setTimeout(function(){ window.location = "prova.php" }, 5000);
     </script>';
 
       $_SESSION['user'] = $name;
@@ -87,14 +87,14 @@ if (isset($_POST["uname"]) && isset($_POST["psw"])) {
       if($psw != $_POST['psw']){
         echo '<script>
         alert("Password errata!");
-        setTimeout(function(){ window.location = "finale.php" }, 5000);
+        setTimeout(function(){ window.location = "prova.php" }, 5000);
       </script>';
       }
     } 
   } else {
     echo '<script>
     alert("User not found, please register!");
-    setTimeout(function(){ window.location = "finale.php" }, 1000);
+    setTimeout(function(){ window.location = "prova.php" }, 1000);
     </script>';
   }
 }

@@ -4,7 +4,7 @@ session_destroy();
 
 echo '<script>
 alert("logout!");
-setTimeout(function(){ window.location = "finale.php" }, 5000);
+setTimeout(function(){ window.location = "prova.php" }, 5000);
 </script>';
 
 echo $_SESSION['user'];

@@ -55,7 +55,7 @@ if(isset($_POST["uname"]) && isset($_POST["psw"]))
         //include 'finale.html';
         echo '<script>
           alert("User existed!, already registered");
-          setTimeout(function(){ window.location = "finale.php" }, 1000);
+          setTimeout(function(){ window.location = "prova.php" }, 1000);
         </script>';        
 
     }
@@ -69,7 +69,7 @@ if(isset($_POST["uname"]) && isset($_POST["psw"]))
       echo " registered successfully!";
       echo '<script>
       alert("Registered successfully!");
-      setTimeout(function(){ window.location = "finale.php" }, 1000);
+      setTimeout(function(){ window.location = "prova.php" }, 1000);
     </script>';   
 
       //termina la pagina php e ritorna alla pagina che l'ha richiamata ovvero quella html
@@ -79,7 +79,7 @@ if(isset($_POST["uname"]) && isset($_POST["psw"]))
 }
 else
 {
-    include 'finale.php';
+    include 'prova.php';
 }
 
 

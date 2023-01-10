@@ -66,6 +66,19 @@ nav ul li a:hover{
   display: inline-block;
   margin: 5px 0;
   border-radius: 5px;
+  align-items: center;
+
+}
+
+.profile div{
+  font-size: 15px;
+}
+
+.profile label{
+  font-size: 15px;
+  display: inline-block;
+  text-align: center;
+  margin-top: -10px;
 }
 
 .hero span{
@@ -81,36 +94,54 @@ nav ul li a:hover{
 }
 
 .notlogged{
-  width: 50px;
+  width: 40px;
   cursor: pointer;
+  margin: auto;
 }
+
+/*figure{
+  text-align: center;
+}
+
+figcaption{
+  margin-top: 2px;
+  font-size: 15px;
+  color: gray;
+}*/
+
 
 
 /*destra*/
+
 .imgbox{
-  width: 45%;
-  height: 80%;
+  width: 60%;
+  height: 85%;
   position: absolute;
   bottom: 0;
   right: 100px;
+  display: flex;
+  flex-direction: column;
 }
 
-.imgbox img{
-  height: 100%;
+.imgbox .selling{
+  height: 50%;
   position: absolute;
-  left: 70%;
+  left: 60%;
   bottom: 0;
   transform: translateX(-50%);
   transition: bottom 1s, left 1s;
 }
-
-.imgbox:hover .backimg{
-  bottom: 40px;
+.imgbox .buying{
+  height: 30%;
+  position: absolute;
+  left: 60%;
+  top: 0;
+  transform: translateX(-50%);
+  transition: bottom 1s, left 1s;
 }
 
-.imgbox:hover .upimg{
-  left: 65%;
-}
+
+
 
 
 /*sinistra*/
@@ -159,30 +190,99 @@ nav ul li a:hover{
   height: 60vh;
 }
 
-.menuB button{
+.menuB .normalB, .obtbutton{
   display: block;
   padding: 10px;
   font-size: 15px;
   display: inline-block;
   margin: 15px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+
+.openbuy{
+  text-align: center;
+  font-size: 15px;
+  background-color: rgb(0, 0, 247);
+  color: white;
+  padding: 15px 15px;
+  border: black;
+  cursor: pointer;
+  float: left;
+  width: 90px;
+  position: relative;
+  border-radius: 12px;
+  margin: 4px 2px;
+  border: 1px solid black;
+}
+
+.opensell{
+  text-align: center;
+  background-color: green;
+  font-size: 15px;
+  color: white;
+  padding: 15px 15px;
+  border: black;
+  cursor: pointer;
+  float: left;
+  width: 90px;
+  position: relative;
+  border-radius: 12px;
+  margin: 4px 2px;
+  border: 1px solid black;
 }
 
 .menuB input[type=number]{
   width: 130px;
   height: 30px;
   display: inline-block;
+  
 }
 
 .menuopen .menuB{
   transform: translateX(0%);
   box-shadow: 0 5px 20px rgba(0,0,0,.5); /*ombreggiatura*/
-
 }
 
-
-
+/*menu bottoni*/
 
 /*login menu*/
+.menuU{
+  top: 1; /* modifica bottom in top */
+  right: 0; /* imposta la posizione a destra */
+  position: fixed;
+  padding-top: 1%;
+  padding-right: 1%;
+  padding-bottom: 1%;
+  display: block;
+  z-index: 100;
+  background: var(--secondary-color);
+  list-style-type: none;
+  width: 20vw;
+  transform: translateY(-200%); /* rimuovi o modifica translateX(-100%) */
+  transition: all 1s cubic-bezier(.215, .61, .355, 1);
+  height: 20vh;
+  display: flex; /* imposta display a flex */
+  flex-wrap: nowrap; /* evita che i flexbox vadano a capo */
+}
+
+.menuU button{
+  display: inline-block;
+  padding: 10px;
+  font-size: 15px;
+  margin: 15px;
+}
+
+.menuopen2 .menuU{
+  transform: translateY(0%);
+  box-shadow: 0 5px 20px rgba(0,0,0,.5); /*ombreggiatura*/
+}
+
+/*login menu*/
+
+
+/*login menu
 .submenuwrap{
   position: absolute;
   top: 100%;
@@ -235,64 +335,20 @@ nav ul li a:hover{
 .submenulink span{
   font-size: 22px;
 }
-
+*/
 
 /*old*/
-
-.openbuy{
-  text-align: center;
-  background-color: blue;
-  color: white;
-  padding: 15px 15px;
-  border: black;
-  cursor: pointer;
-  opacity: 0.8;
-  float: left;
-  width: 90px;
-  position: relative;
-  border-radius: 12px;
-  margin: 4px 2px;
-  border: 1px solid black;
-}
-
-.opensell{
-  text-align: center;
-  background-color: green;
-  color: white;
-  padding: 15px 15px;
-  border: black;
-  cursor: pointer;
-  opacity: 0.8;
-  float: left;
-  width: 90px;
-  position: relative;
-  border-radius: 12px;
-  margin: 4px 2px;
-  border: 1px solid black;
-}
-
-
-
 
 
 
 .popupselling{ 
-  /*popup al centro
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  display: none;*/
-
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 9;
+  z-index: 100000;
   display: none;
 }
 
@@ -303,21 +359,20 @@ nav ul li a:hover{
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 9;
+  z-index: 10000;
   display: none;
 }
 
-.container{
-  width: 0px;
-  padding: 2px;
-  padding-left: 2px;
-  padding-right: 2px;
-  background-color: white;
+.container {
+  width: 60vh;
+  padding: 1px;
+  background-color: var(--secondary-color);
+  margin: 0 auto; /* questo centrerà l'elemento orizzontalmente */
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: center; /* questo centrerà l'elemento verticalmente */
+  justify-content: center; /* questo centrerà l'elemento verticalmente */
 }
 
 .container input[type=number]{
@@ -325,14 +380,15 @@ nav ul li a:hover{
   padding: 15px;
   margin: 5px 0 22px 0;
   border: none;
-  background: #f1f1f1;
+  background: white;
   display: flex;
   align-items: center;
   margin-right: 10px;
 }
 
+
 .container input[type=number]:focus{
-  background-color: #ddd;
+  background-color:white;
   outline: none;
 }
 
@@ -341,29 +397,36 @@ nav ul li a:hover{
   margin-right: 10px;
   display: flex;
   align-items: center;
+  color: var(--primary-color);
 }
 
+.container h2{
+  color: var(--primary-color);
+}
+
+
 .container .sell{
-  background-color: #04AA6D;
+  font-size: 20px;
   color: white;
+  background-color: #04AA6D;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
-  width: 30%;
+  width: 70%;
   margin-bottom:10px;
-  opacity: 0.8;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   display: center;
   justify-content: space-between;
 }
 
 .container .cancel{
+  font-size: 15px;
+  color: white;
   background-color: red;
   width: 30%;
   padding: 16px 20px;
   border: none;  
   cursor: pointer;
-  opacity: 0.8;
   margin-bottom:10px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   display: center;
@@ -374,3 +437,176 @@ nav ul li a:hover{
   opacity: 1;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
+
+
+
+
+/*Bottoni utente*/
+.dropbtn{
+  display: inline-block;
+  text-align: center;
+  padding: 10px 10px;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  width: 10vh;
+  border-radius: 3%;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.dropbtn:hover{
+  display: block;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.login{
+  display: inline-block;
+  text-align: center;
+  padding: 10px 10px;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  width: 10vh;
+  border-radius: 3%;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.login:hover{
+  display: block;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.logout{
+  display: inline-block;
+  text-align: center;
+  padding: 10px 10px;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  width: 10vh;
+  border-radius: 3%;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.logout:hover{
+  display: block;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+
+/*login form*/
+.loginform, .loginform2{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10000000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: var(--secondary-color); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 20px;
+  align-items: center;
+}
+.loginform2{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10000000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: var(--secondary-color); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 20px;
+  align-items: center;
+}
+
+
+/* form Content/Box */
+.formcontent {
+  background-color: var(--secondary-color);
+  margin: 5px auto; /* 15% from the top and centered */
+  border: 1px solid #888;
+  width: 30%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  /* Position it in the top right corner outside of the modal */
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+/* Close button on hover */
+.close:hover, .close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+.loginbutton, .cancelbutton{
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.loginbutton:hover, .cancelbutton:hover{
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbutton {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.img {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+  width: 20%;
+  border-radius: 50%;
+}
+
+.cform {
+  padding: 16px;
+  align-items: center;
+}
+
+.cform input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.cform label{
+  color: var(--primary-color);
+}
+
+
+
+/*login form*/
+

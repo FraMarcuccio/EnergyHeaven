@@ -45,7 +45,7 @@
         </li>
         <li class="profile">
           <img src="notlogged.png" class="notlogged" id="menuUtrigger">
-          <div>Profile</div>
+          <div id="Sprofilo" >Profile</div>
         </li>
       </ul>
     </nav>
@@ -97,7 +97,7 @@
       
       <form class="formcontent animate" action="registration.php" method="post">
 
-        <img src="logged.png" class="img">
+        <img src="registericon.png" class="img">
 
         <div class="cform">
           <label for="uname"><b>Username</b></label>

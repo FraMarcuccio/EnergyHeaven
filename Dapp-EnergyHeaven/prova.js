@@ -93,6 +93,16 @@ document.getElementById("bottonelog").addEventListener("click", function() {
 let phpvariable = document.getElementById('hiddenValue').value;
 
 
+function changeStatus(){
+  if(phpvariable != "nullo"){
+    menuUtrigger.src = "logged.png";
+    document.getElementById("Sprofilo").innerHTML = phpvariable;
+  }
+}
+
+
+changeStatus();
+
 // When the user clicks anywhere outside of the modal, close it
 var modal = document.getElementById('loginform');
 
@@ -311,7 +321,7 @@ function buyinGraph(){
 */
 //grafici
 
-document.getElementById("reward").innerHTML = 'esce questa scritta quando carica tutta la pagina';
+//document.getElementById("reward").innerHTML = 'esce questa scritta quando carica tutta la pagina';
 
 
 

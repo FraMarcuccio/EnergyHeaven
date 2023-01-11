@@ -144,7 +144,7 @@ function sellingGraph(dati){
   for (var i = 0; i < length; i++){
     //console.log(dati[i]);
     if(dati[i].includes(senderAddress)){
-      console.log("true");
+      console.log("true, il senderAddress è " + senderAddress+ " mi sono preso :" + dati[i]);
       valori[j] = dati[i];
       j++;
       console.log(dati[i]);
@@ -154,47 +154,14 @@ function sellingGraph(dati){
   //take buying data
   j = 0;
   var xValues = [];
-  var yValues = [];
 
   for(var k = 0; k < valori.length; k++){
     if(valori[k].includes(" B ")){
       xValues[j] = valori[k].split(" ")[2];
-      yValues[j] = valori[k].split(" ")[2];
       //console.log("valorik" + valori[k].split(" "));
       j++;
     }
   }
-  
-
-  new Chart("buying", {
-      type: "line",
-      data: {
-          labels: xValues,
-          datasets: [{
-              fill: false,
-              lineTension: 0,
-              backgroundColor: "rgb(38, 182, 5)",
-              borderColor: "rgba(0,0,255,0.1)",
-              data: xValues,
-              pointRadius: 4
-          },
-          {
-              fill: false,
-              lineTension: 0,
-              backgroundColor: "rgb(255, 0, 0)",
-              borderColor: "rgb(255, 0, 0)",
-              data: yValues,
-              pointRadius: 4
-          }]
-      },
-      options: {
-          legend: { display: false },
-          scales: {
-              yAxes: [{ ticks: { min: 0, max: 50 } }],
-          }
-      }
-  });
-
 
   //take selling data
   j = 0;
@@ -210,6 +177,54 @@ function sellingGraph(dati){
     }
   }
 
+  
+  new Chart("selling", {
+    type: 'line',
+    data: {
+      labels: y2Values,
+      datasets: [
+        {
+          label: 'Your Selling',
+          data: x2Values,
+          borderWidth: 1,
+          fill: true,
+          borderColor: 'green'
+        },
+        {
+          label: 'Your Buying',
+          data: xValues,
+          borderWidth: 1,
+          fill: true,
+          borderColor: 'blue'
+        }       
+      ]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'amount of bought/sold energy'
+          },
+          ticks: {
+            beginAtZero: true
+          },
+        }],
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'price of selling'
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+  
+
+  /*
   new Chart("selling", {
     type: "line",
     data: {
@@ -229,7 +244,25 @@ function sellingGraph(dati){
             borderColor: "rgb(0,0,255)",
             data: y2Values,
             pointRadius: 4
-        }]
+        },
+        {
+          fill: false,
+          lineTension: 0,
+          backgroundColor: "rgb(38, 182, 5)",
+          borderColor: "rgba(0,0,255,0.1)",
+          data: xValues,
+          pointRadius: 4
+        },
+        {
+          fill: false,
+          lineTension: 0,
+          backgroundColor: "rgb(255, 0, 0)",
+          borderColor: "rgb(255, 0, 0)",
+          data: yValues,
+          pointRadius: 4
+        }
+      
+      ]
     },
     options: {
         legend: { display: false },
@@ -237,7 +270,8 @@ function sellingGraph(dati){
             yAxes: [{ ticks: { min: 0, max: 50 } }],
         }
     }
-});
+  });*/
+  
 }
 
 /*
@@ -393,10 +427,7 @@ if(letto){
 $.when(leggiDatiGrafici()).done(function() {
   datiletti = true;
 });
-if(datiletti){
-  console.log(" i dati grafici letti sono: " + datigrafici);
-  sellingGraph(datigrafici);
-}
+
 
 
   
@@ -464,6 +495,11 @@ else{
 //restituisce account[i] mappato con la sessione corrente
 senderAddress = indirizzo;
 console.log("value/address return: "+senderAddress);
+
+if(datiletti && senderAddress != ''){
+  console.log(" i dati grafici letti sono: " + datigrafici);
+  sellingGraph(datigrafici);
+}
 
 console.log("key/session return: "+sessione);  
 

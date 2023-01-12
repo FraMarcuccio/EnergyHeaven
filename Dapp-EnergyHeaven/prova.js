@@ -331,7 +331,7 @@ function buyinGraph(){
 //web3-------------------------------------------------------
 
 // Set the contract address
-var contractAddress = '0xaaa496003a1b52fD3824d279e0CBd7D84E0d0d6e';
+var contractAddress = '0xAAd943Bfb6E1d76EEb290A5C8f7174daD19432e3';
 // Insert your contract address there
 
 // Set the relative URI of the contract’s skeleton (with ABI)
@@ -660,12 +660,13 @@ function obtain_tokens(){
 
   contract.methods.obtain_tokens().send({from:senderAddress, value:input}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
+    window.location.reload();
   });
 
   alert("Token obtained");
 
 
-  window.location.reload();
+  
 
   return false;
 
@@ -688,12 +689,13 @@ function tokens_to_ETH(){
 
   contract.methods.tokens_to_ETH(input).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
+    window.location.reload();
   });
 
   alert("Token converted");
 
 
-  window.location.reload();
+  
 
   return false;
 
@@ -713,11 +715,12 @@ function join_as_producer(){
 
   contract.methods.join_as_producer().send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
+    window.location.reload();
   });
 
   alert("You are a producer now");
   
-  window.location.reload();
+  
 
   return false;
 
@@ -746,12 +749,13 @@ function buy_energy(){
     catch(err) {
       console.log(err);
     }
+    window.location.reload();
   });
 
   alert(input + " Quantity of energy buyied");
 
 
-  window.location.reload();
+  
 
   return false;
 
@@ -807,12 +811,13 @@ function sell_energy(){
     catch(err) {
       console.log(err);
     }
+    window.location.reload();
   });
 
   alert(amount + " Quantity of energy sold at " + price + " token");
 
 
-  window.location.reload();
+  
 
   return false;
 

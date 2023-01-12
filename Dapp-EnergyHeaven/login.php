@@ -7,18 +7,18 @@ session_start();
 if(isset($_SESSION['user'])){
   echo '<script>
   alert("already logged!");
-  setTimeout(function(){ window.location = "prova.php" }, 5000);
+  setTimeout(function(){ window.location = "prova.php" }, 1000);
 </script>';
-
   echo $_SESSION['user'];
-  echo '    asdasdafaf    ';
+
+  return false;
 }
-else{
+/*else{
   echo '<script>
   alert("not logged!");
-  setTimeout(function(){ window.location = "prova.php" }, 5000);
+  setTimeout(function(){ window.location = "prova.php" }, 1000);
 </script>';
-}
+}*/
 
 
 /*
@@ -67,13 +67,13 @@ if (isset($_POST["uname"]) && isset($_POST["psw"])) {
 
   // register user or pop up message
   if ($finduser) {
-    //echo $name;
-    echo $psw;
-    echo 'existed!';
+    echo $name;
+    //echo $psw;
+    echo ' existed!';
     if($psw == $_POST['psw']){
       echo '<script>
       alert("Loged successfully!");
-      setTimeout(function(){ window.location = "prova.php" }, 5000);
+      setTimeout(function(){ window.location = "prova.php" }, 1000);
     </script>';
 
       $_SESSION['user'] = $name;
@@ -86,8 +86,8 @@ if (isset($_POST["uname"]) && isset($_POST["psw"])) {
     else{
       if($psw != $_POST['psw']){
         echo '<script>
-        alert("Password errata!");
-        setTimeout(function(){ window.location = "prova.php" }, 5000);
+        alert("Password not matched!");
+        setTimeout(function(){ window.location = "prova.php" }, 1000);
       </script>';
       }
     } 

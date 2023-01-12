@@ -29,6 +29,9 @@
 }
 
 
+
+
+/*navbar*/
 nav{
   width: 99%;
   margin: auto;
@@ -109,6 +112,9 @@ figcaption{
   color: gray;
 }*/
 
+/*navbar*/
+
+
 
 
 /*destra*/
@@ -187,7 +193,7 @@ figcaption{
   width: 25vw;
   transform: translateX(-100%);
   transition: all 1s cubic-bezier(.215, .61, .355, 1);
-  height: 60vh;
+  height: 50vh;
 }
 
 .menuB .normalB, .obtbutton{
@@ -244,6 +250,7 @@ figcaption{
   transform: translateX(0%);
   box-shadow: 0 5px 20px rgba(0,0,0,.5); /*ombreggiatura*/
 }
+
 
 /*menu bottoni*/
 
@@ -535,6 +542,7 @@ figcaption{
   border: 1px solid #888;
   width: 30%; /* Could be more or less, depending on screen size */
 }
+
 
 /* The Close Button */
 .close {

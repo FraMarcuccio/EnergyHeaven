@@ -92,16 +92,19 @@ document.getElementById("bottonelog").addEventListener("click", function() {
 
 let phpvariable = document.getElementById('hiddenValue').value;
 
-
 function changeStatus(){
   if(phpvariable != "nullo"){
     menuUtrigger.src = "logged.png";
     document.getElementById("Sprofilo").innerHTML = phpvariable;
+    //$("#reward").html("reward");
+    //$("#balance").html("balance");
+    //console.log("asasasdasf");
   }
 }
 
 
 changeStatus();
+
 
 // When the user clicks anywhere outside of the modal, close it
 var modal = document.getElementById('loginform');
@@ -328,7 +331,7 @@ function buyinGraph(){
 //web3-------------------------------------------------------
 
 // Set the contract address
-var contractAddress = '0xdC3Dc05f7347c4216a77a88a89F055a2e1A367ca';
+var contractAddress = '0xaaa496003a1b52fD3824d279e0CBd7D84E0d0d6e';
 // Insert your contract address there
 
 // Set the relative URI of the contract’s skeleton (with ABI)
@@ -500,6 +503,8 @@ else{
     sessione = mapkey.get(indirizzo);
   }*/
 
+  
+
 }
 
 //restituisce account[i] mappato con la sessione corrente
@@ -530,7 +535,15 @@ console.log("key/session return: "+sessione);
       console.log(event);
   });
 
-  updateDisplayedInformation();
+
+  if(phpvariable != "nullo"){
+    updateDisplayedInformation();
+  }
+  else{
+    console.log("nullo nullo ");
+
+  }
+
 
 
 }
@@ -600,14 +613,14 @@ function updateDisplayedInformation() {
 
 function getUserBalance(){
   contract.methods.get_my_balance().call({from:senderAddress, gas:1000000}).then(function(result) {
-    console.log("balance: " );
+    console.log("balance: " + result);
     $("#balance").html(result);
   });
 }
 
 function getUserRewards(){
   contract.methods.get_my_rewards().call({from:senderAddress, gas:1000000}).then(function(result) {
-    console.log("rewards: " );
+    console.log("rewards: " + result);
     $("#reward").html(result);
   });
 }
@@ -616,8 +629,16 @@ function getUserRewards(){
 
 //Ricarica ogni 1000 millisecondi ? controllare se funziona bene
 setInterval(function(){
-  $('#reward');
+  $('#reward'),$('#balance') ;
 }, 1000);
+
+//pagina ricaricata dopo 1000millisec
+/*
+setTimeout(function(){
+  window.location.reload();
+}, 1000);
+*/
+
 
 
 //function contract -----------------------------------
@@ -641,7 +662,14 @@ function obtain_tokens(){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
 
+  alert("Token obtained");
+
+
+  window.location.reload();
+
   return false;
+
+
 }
 
 function tokens_to_ETH(){
@@ -662,7 +690,14 @@ function tokens_to_ETH(){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
 
+  alert("Token converted");
+
+
+  window.location.reload();
+
   return false;
+
+
 }
 
 function yes(){
@@ -679,8 +714,14 @@ function join_as_producer(){
   contract.methods.join_as_producer().send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
   });
+
+  alert("You are a producer now");
   
+  window.location.reload();
+
   return false;
+
+
 }
 
 function buy_energy(){
@@ -707,8 +748,14 @@ function buy_energy(){
     }
   });
 
+  alert(input + " Quantity of energy buyied");
+
+
+  window.location.reload();
 
   return false;
+
+
 }
 
 
@@ -762,9 +809,13 @@ function sell_energy(){
     }
   });
 
-  
+  alert(amount + " Quantity of energy sold at " + price + " token");
+
+
+  window.location.reload();
 
   return false;
+
 }
 
 

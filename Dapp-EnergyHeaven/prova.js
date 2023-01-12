@@ -92,6 +92,19 @@ document.getElementById("bottonelog").addEventListener("click", function() {
 
 let phpvariable = document.getElementById('hiddenValue').value;
 
+function changeStatus(){
+  if(phpvariable != "nullo"){
+    menuUtrigger.src = "logged.png";
+    document.getElementById("Sprofilo").innerHTML = phpvariable;
+    //$("#reward").html("reward");
+    //$("#balance").html("balance");
+    //console.log("asasasdasf");
+  }
+}
+
+
+changeStatus();
+
 
 // When the user clicks anywhere outside of the modal, close it
 var modal = document.getElementById('loginform');
@@ -110,47 +123,171 @@ window.onclick = function(event2) {
   }
 }
 
+let datigrafici;
+
+function leggiDatiGrafici() {
+  $.ajax({
+    type: "POST",
+    url: "readgraphdata.php",
+    data: { action: 'read' }
+  }).done(function(data) {
+    //console.log(data);
+    datigrafici = data.split('\n');
+    //console.log(valori);
+  });
+
+}
+
+$(window).on('load', function() {
+  leggiFile();
+  leggiDatiGrafici();
+  initialise(contractAddress);
+  //alert (session);
+});  
+
 
 
 //grafici
-function sellingGraph(){
-  var xValues = [50,60,70,80,90,100,110,120,130,140,150];
-  var yValues = [7,8,8,9,9,9,10,11,14,14,15];
-  
-  var x2Values = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
-  var y2Values = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+function sellingGraph(dati){
+ 
+  var j = 0;
+  var valori = [];
+
+  var length = dati.length;
+  for (var i = 0; i < length; i++){
+    //console.log(dati[i]);
+    if(dati[i].includes(senderAddress)){
+      console.log("true, il senderAddress è " + senderAddress+ " mi sono preso :" + dati[i]);
+      valori[j] = dati[i];
+      j++;
+      console.log(dati[i]);
+    } 
+  } 
+
+  //take buying data
+  j = 0;
+  var xValues = [];
+
+  for(var k = 0; k < valori.length; k++){
+    if(valori[k].includes(" B ")){
+      xValues[j] = valori[k].split(" ")[2];
+      //console.log("valorik" + valori[k].split(" "));
+      j++;
+    }
+  }
+
+  //take selling data
+  j = 0;
+  var x2Values = [];
+  var y2Values = [];
+
+  for(var k = 0; k < valori.length; k++){
+    if(valori[k].includes(" S ")){
+      x2Values[j] = valori[k].split(" ")[2];
+      y2Values[j] = valori[k].split(" ")[3];
+      //console.log("valorik" + valori[k].split(" "));
+      j++;
+    }
+  }
+
   
   new Chart("selling", {
-      type: "line",
-      data: {
-          labels: xValues,
-          datasets: [{
-              fill: false,
-              lineTension: 0,
-              backgroundColor: "rgb(38, 182, 5)",
-              borderColor: "rgba(0,0,255,0.1)",
-              data: yValues,
-              pointRadius: 4
+    type: 'line',
+    data: {
+      labels: y2Values,
+      datasets: [
+        {
+          label: 'Your Selling',
+          data: x2Values,
+          borderWidth: 1,
+          fill: true,
+          borderColor: 'green'
+        },
+        {
+          label: 'Your Buying',
+          data: xValues,
+          borderWidth: 1,
+          fill: true,
+          borderColor: 'blue'
+        }       
+      ]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'amount of bought/sold energy'
           },
-          {
-              fill: false,
-              lineTension: 0,
-              backgroundColor: "rgb(255, 0, 0)",
-              borderColor: "rgb(255, 0, 0)",
-              data: y2Values,
-              pointRadius: 4
-          }]
-      },
-      options: {
-          legend: { display: false },
-          scales: {
-              yAxes: [{ ticks: { min: 6, max: 22 } }],
+          ticks: {
+            beginAtZero: true
+          },
+        }],
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'price of selling'
+          },
+          ticks: {
+            beginAtZero: true
           }
+        }]
       }
+    }
   });
+  
+
+  /*
+  new Chart("selling", {
+    type: "line",
+    data: {
+        labels: xValues,
+        datasets: [{
+            fill: false,
+            lineTension: 0,
+            backgroundColor: "rgb(0,0,255)",
+            borderColor: "rgba(0,0,255,0.1)",
+            data: x2Values,
+            pointRadius: 4
+        },
+        {
+            fill: false,
+            lineTension: 0,
+            backgroundColor: "rgb(255, 0, 0)",
+            borderColor: "rgb(0,0,255)",
+            data: y2Values,
+            pointRadius: 4
+        },
+        {
+          fill: false,
+          lineTension: 0,
+          backgroundColor: "rgb(38, 182, 5)",
+          borderColor: "rgba(0,0,255,0.1)",
+          data: xValues,
+          pointRadius: 4
+        },
+        {
+          fill: false,
+          lineTension: 0,
+          backgroundColor: "rgb(255, 0, 0)",
+          borderColor: "rgb(255, 0, 0)",
+          data: yValues,
+          pointRadius: 4
+        }
+      
+      ]
+    },
+    options: {
+        legend: { display: false },
+        scales: {
+            yAxes: [{ ticks: { min: 0, max: 50 } }],
+        }
+    }
+  });*/
+  
 }
 
-
+/*
 function buyinGraph(){
   var xyValues = [
     {x:50, y:7},
@@ -184,17 +321,17 @@ function buyinGraph(){
     }
   });  
 }
-
+*/
 //grafici
 
-document.getElementById("reward").innerHTML = 'esce questa scritta quando carica tutta la pagina';
+//document.getElementById("reward").innerHTML = 'esce questa scritta quando carica tutta la pagina';
 
 
 
 //web3-------------------------------------------------------
 
 // Set the contract address
-var contractAddress = '0xdC3Dc05f7347c4216a77a88a89F055a2e1A367ca';
+var contractAddress = '0xAAd943Bfb6E1d76EEb290A5C8f7174daD19432e3';
 // Insert your contract address there
 
 // Set the relative URI of the contract’s skeleton (with ABI)
@@ -210,9 +347,20 @@ var contract = null;
 
 
 let valori;
+var datiletti;
 var letto;
 var entratoelse;
 
+
+
+function scriviDatiGrafici(value){
+  $.ajax({
+    type: "POST",
+    url: "writegraphdata.php",
+    data: value
+  });
+  console.log("scrittura fatta");
+}
 
 function leggiFile() {
   $.ajax({
@@ -227,11 +375,7 @@ function leggiFile() {
 }
 
 
-$(window).on('load', function() {
-  leggiFile();
-  initialise(contractAddress);
-  //alert (session);
-});    
+  
 
 async function initialise(contractAddress) {
   // Initialisation of Web3
@@ -278,7 +422,6 @@ $.when(leggiFile()).done(function() {
 
  // stampa a schermo l'array valori solo dopo che è stat eseguita la funzione che lo riempie
 });
-
 if(letto){
   console.log("primo valore dell'array: " + valori[0]);
   console.log("secondo valore dell'array: " + valori[1]);
@@ -292,6 +435,12 @@ if(letto){
 
   }
 }
+
+
+$.when(leggiDatiGrafici()).done(function() {
+  datiletti = true;
+});
+
 
 
   
@@ -354,11 +503,18 @@ else{
     sessione = mapkey.get(indirizzo);
   }*/
 
+  
+
 }
 
 //restituisce account[i] mappato con la sessione corrente
 senderAddress = indirizzo;
 console.log("value/address return: "+senderAddress);
+
+if(datiletti && senderAddress != ''){
+  console.log(" i dati grafici letti sono: " + datigrafici);
+  sellingGraph(datigrafici);
+}
 
 console.log("key/session return: "+sessione);  
 
@@ -379,7 +535,15 @@ console.log("key/session return: "+sessione);
       console.log(event);
   });
 
-  updateDisplayedInformation();
+
+  if(phpvariable != "nullo"){
+    updateDisplayedInformation();
+  }
+  else{
+    console.log("nullo nullo ");
+
+  }
+
 
 
 }
@@ -449,14 +613,14 @@ function updateDisplayedInformation() {
 
 function getUserBalance(){
   contract.methods.get_my_balance().call({from:senderAddress, gas:1000000}).then(function(result) {
-    console.log("balance: " );
+    console.log("balance: " + result);
     $("#balance").html(result);
   });
 }
 
 function getUserRewards(){
   contract.methods.get_my_rewards().call({from:senderAddress, gas:1000000}).then(function(result) {
-    console.log("rewards: " );
+    console.log("rewards: " + result);
     $("#reward").html(result);
   });
 }
@@ -465,8 +629,16 @@ function getUserRewards(){
 
 //Ricarica ogni 1000 millisecondi ? controllare se funziona bene
 setInterval(function(){
-  $('#reward');
+  $('#reward'),$('#balance') ;
 }, 1000);
+
+//pagina ricaricata dopo 1000millisec
+/*
+setTimeout(function(){
+  window.location.reload();
+}, 1000);
+*/
+
 
 
 //function contract -----------------------------------
@@ -488,9 +660,17 @@ function obtain_tokens(){
 
   contract.methods.obtain_tokens().send({from:senderAddress, value:input}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
+    window.location.reload();
   });
 
+  alert("Token obtained");
+
+
+  
+
   return false;
+
+
 }
 
 function tokens_to_ETH(){
@@ -509,9 +689,17 @@ function tokens_to_ETH(){
 
   contract.methods.tokens_to_ETH(input).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
+    window.location.reload();
   });
 
+  alert("Token converted");
+
+
+  
+
   return false;
+
+
 }
 
 function yes(){
@@ -527,9 +715,16 @@ function join_as_producer(){
 
   contract.methods.join_as_producer().send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
+    window.location.reload();
   });
+
+  alert("You are a producer now");
   
+  
+
   return false;
+
+
 }
 
 function buy_energy(){
@@ -548,9 +743,23 @@ function buy_energy(){
 
   contract.methods.buy_energy(input).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
+    try {
+      scriviDatiGrafici(senderAddress + " B " + input );
+    }
+    catch(err) {
+      console.log(err);
+    }
+    window.location.reload();
   });
 
+  alert(input + " Quantity of energy buyied");
+
+
+  
+
   return false;
+
+
 }
 
 
@@ -596,12 +805,25 @@ function sell_energy(){
 
   contract.methods.sell_energy(amount,price).send({from:senderAddress, gas:1000000}).on('receipt',function(receipt){
     console.log("Tx Hash: " + receipt.transactionHash);
+    try {
+      scriviDatiGrafici(senderAddress + " S " + amount + " " + price );
+    }
+    catch(err) {
+      console.log(err);
+    }
+    window.location.reload();
   });
 
+  alert(amount + " Quantity of energy sold at " + price + " token");
+
+
+  
+
   return false;
+
 }
 
 
 //funzioni grafici
-window.onload = sellingGraph();
-window.onload = buyinGraph();
+//window.onload = sellingGraph();
+//window.onload = buyinGraph();

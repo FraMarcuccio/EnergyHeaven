@@ -38,14 +38,15 @@
       <ul>
         <li class="profile">
           <img src="piggy.png" class="notlogged">
-          <label class="balancel" id="balance">Balance</label>        </li>
+          <label class="balancel" id="balance">Balance</label>        
+        </li>
         <li class="profile">
           <img src="rewardlogo.png" class="notlogged">
           <label class="rewardl" id="reward">Reward</label>   
         </li>
         <li class="profile">
           <img src="notlogged.png" class="notlogged" id="menuUtrigger">
-          <div>Profile</div>
+          <div id="Sprofilo" >Profile</div>
         </li>
       </ul>
     </nav>
@@ -66,10 +67,11 @@
     </ul>
 
     <div id="loginform" class="loginform">
-      <span onclick="closeform()" class="close" title="Close form">&times;</span>
-      
+    <!--  
+    <span onclick="closeform()" class="close" title="Close form">&times;</span>
+      -->
       <form class="formcontent animate" action="login.php" method="post">
-
+        
         <img src="loginicon.png" class="img">
 
         <div class="cform">
@@ -93,11 +95,12 @@
     <!--registrazione-->
 
     <div id="loginform2" class="loginform2">
-      <span onclick="closeform2()" class="close" title="Close form">&times;</span>
-      
+    <!--  
+    <span onclick="closeform2()" class="close" title="Close form">&times;</span>
+    -->  
       <form class="formcontent animate" action="registration.php" method="post">
 
-        <img src="logged.png" class="img">
+        <img src="registericon.png" class="img">
 
         <div class="cform">
           <label for="uname"><b>Username</b></label>
@@ -126,8 +129,8 @@
 
       <li>
       <form class="obtaintks" onsubmit="obtain_tokens(), getUserBalance(); return false;">
-          <button class="obtbutton" type="submit">Obtain tokens</button>
-          <input type="number" id="input" required="required">  
+          <button class="obtbutton" type="submit">Obtain Green Tokens</button>
+          <input type="number" placeholder="Finney" id="input" required="required">  
         </form>
       </li>
 
@@ -139,8 +142,8 @@
 
       <li>
         <form class="eth" onsubmit="tokens_to_ETH(), getUserBalance(); return false;">
-          <button type="submit" class="normalB">Convert token</button>
-          <input type="number" id="input2" required="required">
+          <button type="submit" class="normalB">Green Tokens to ETH</button>
+          <input type="number" placeholder="Amount of token" id="input2" required="required">
         </form>      
       </li>
 
@@ -158,8 +161,8 @@
     <div class="popupbuying" id="popupBuying">
       <form class="container" onsubmit="buy_energy(), getUserBalance(); return false;">
         <h2>Buying options</h2>
-          <label for="quantity">Quantity of energy</label>
-          <input type="number" id="Qnumber" required>
+          <label for="quantity">Quantity of Green Tokens that you would spend</label>
+          <input type="number" placeholder="Green Tokens" id="Qnumber" required>
           
           <button type="submit" class="sell">Buy energy</button>
           <button type="button" class="cancel" onclick="closeBuying()">Close</button>
@@ -172,10 +175,10 @@
         <h2>Selling options</h2>
 
         <label for="energy">Quantity of energy</label>
-        <input type="number" id="Enumber" required>
+        <input type="number" placeholder="Watt" id="Enumber" required>
 
         <label for="price">Price of energy</label>
-        <input type="number" id="Eprice" required>
+        <input type="number" placeholder="Green Tokens" id="Eprice" required>
 
         <button type="submit" class="sell actionbtn">Sell energy</button>
         <button type="button" class="cancel actionbtn" onclick="closeSelling()">Close</button>
@@ -186,9 +189,9 @@
 
     <div class="imgbox">
       <canvas class="selling" id="selling"></canvas>    
-      <!--
-      <canvas class="buying" id="buying"></canvas>
--->
+      
+     <!-- <canvas class="buying" id="buying"></canvas> -->
+
     </div>
 
 

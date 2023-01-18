@@ -14,49 +14,7 @@ open CMD -> cd, to go to the folder -> mkdir, to create folder -> truffle init, 
 
 In contracts folder -> set Migration.sol and YourContract
 
-Migration.sol
-..
-Migration.sol
-// SPDX-License-Identifier: MIT
-pragma solidity >=0.4.22 <0.9.0;
-
-contract Migrations {
-  address public owner = msg.sender;
-  uint public last_completed_migration;
-
-  modifier restricted() {
-    require(
-      msg.sender == owner,
-      "This function is restricted to the contract's owner"
-    );
-    _;
-  }
-
-  function setCompleted(uint completed) public restricted {
-    last_completed_migration = completed;
-  }
-}
-..
-
-In migrations folder -> create with those exact titles 1_initial_migration.js and 2_deploy_contracts.js -> modify those two .js in this manner
-
-1_initial_migration.js
-..
-const Migrations = artifacts.require("Migrations");
-
-module.exports = function (deployer) {
-  deployer.deploy(Migrations);
-};
-..
-
-2_deploy_contracts.js
-..
-const YourContract = artifacts.require("YourContract");
-
-module.exports = function (deployer) {
-  deployer.deploy(YourContract);
-};
-..
+In migrations folder -> create with those exact titles 1_initial_migration.js and 2_deploy_contracts.js -> modify those two .js
 
 Open Ganache -> create new workspace -> add project -> in truffle folder -> truffle-config.js -> lunch workspace (maybe you would like to modify the gas limit, modify it before lunch)
 
